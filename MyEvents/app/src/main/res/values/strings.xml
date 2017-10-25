@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MyEvents</string>
+    <string name="facebook_application_id" translatable="false">1678121328886492</string>
+    <!-- Facebook Application ID, prefixed by 'fb'.  Enables Chrome Custom tabs. -->
+    <string name="facebook_login_protocol_scheme" translatable="false">fb1678121328886492</string>
+    <string name="twitter_consumer_key" translatable="false">Zk9Ej8C8O8LwllKE7lfHOCy7t</string>
+    <string name="twitter_consumer_secret" translatable="false">q5GwdLz2N5xb1YFboKgVDzSzoxTRPZSaszL3teuw1oCwmq1utK</string>
+
+</resources>
