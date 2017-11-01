@@ -11,6 +11,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resConfigs "auto"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -21,6 +22,9 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:support-vector-drawable:26.1.0'
+    implementation 'com.google.android.gms:play-services-maps:11.4.2'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -35,6 +39,11 @@ dependencies {
     compile("com.twitter.sdk.android:twitter-core:3.0.0@aar") { transitive = true }
     testCompile 'junit:junit:4.12'
 }
+
+
+
+
+
 
 
 
