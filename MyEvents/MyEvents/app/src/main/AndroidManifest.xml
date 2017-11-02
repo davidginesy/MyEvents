@@ -48,14 +48,18 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps">
+            android:parentActivityName="com.example.user.myevents.MainActivity"
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.user.myevents.MainActivity" />
         </activity>
         <activity
             android:name=".ProfileActivity"
-            android:label="@string/title_activity_profile" />
-        <activity android:name=".CreateEventActivity"></activity>
+            android:label="@string/title_activity_profile"
+            android:parentActivityName="com.example.user.myevents.MainActivity"/>
+        <activity android:name=".CreateEventActivity"
+            android:label="@string/action_create_event"
+            android:parentActivityName="com.example.user.myevents.MainActivity"/>
     </application>
 
 </manifest>
