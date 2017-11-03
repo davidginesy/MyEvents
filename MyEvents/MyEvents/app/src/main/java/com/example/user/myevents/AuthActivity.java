@@ -23,7 +23,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_auth);
 
         if (auth.getCurrentUser() != null) {
             startActivity(new Intent(this, MainActivity.class));

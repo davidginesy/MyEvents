@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.user.myevents.ProfileActivity">
+    tools:context="com.example.user.myevents.ProfileFragment"
+    android:id="@+id/profile_view">
 
 </android.support.constraint.ConstraintLayout>
