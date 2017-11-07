@@ -5,20 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_dark"
     tools:context="com.example.user.myevents.AuthActivity">
 
 
-    <Button
 
-        android:id="@+id/Log_out_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Log out"
-        tools:layout_alignParentTop="true"
-        tools:layout_alignParentLeft="true"
-        tools:layout_alignParentStart="true"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="0dp" />
 
 </android.support.constraint.ConstraintLayout>
