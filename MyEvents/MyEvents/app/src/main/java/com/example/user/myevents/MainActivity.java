@@ -18,10 +18,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.content.Intent;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
     static final String TAG="Main activity";
@@ -53,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
         nom.setText(auth.getCurrentUser().getDisplayName());
         final TextView mail = (TextView) v.findViewById(R.id.mail);
         mail.setText(auth.getCurrentUser().getEmail());
+        if (!auth.getCurrentUser().getProviders().get(0).equals("password")){
+            ImageView profilePicture = (ImageView) v.findViewById(R.id.photo);
+            String photoUrl = auth.getCurrentUser().getPhotoUrl().toString();
+            Picasso.with(getBaseContext()).load(photoUrl).fit().into(profilePicture);
+        }
 
 
     }

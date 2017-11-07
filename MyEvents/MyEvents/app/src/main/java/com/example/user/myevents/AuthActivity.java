@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Arrays;
 
-public class AuthActivity extends AppCompatActivity implements View.OnClickListener {
+public class AuthActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
     public static final String user_mail = "com.example.user.myevnts.MESSAGE";
     FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -32,6 +32,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
             startActivityForResult(
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
+                            .setIsSmartLockEnabled(false)
                             .setAvailableProviders(
                                     Arrays.asList(
                                             new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
@@ -54,21 +55,9 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 return;
             }
-            else{
-                findViewById(R.id.Log_out_button).setOnClickListener(this);
-            }
+
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.Log_out_button) {
-            AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    finish();
-                }
-            });
-        }
-    }
+
 }
