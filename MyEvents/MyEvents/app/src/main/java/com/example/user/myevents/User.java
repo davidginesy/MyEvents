@@ -4,12 +4,12 @@ package com.example.user.myevents;
 import java.util.List;
 
 public class User {
-    private String username;
-    private String email;
-    private String provider;
-    private String photoURL;
-    private List<Event> event;
-    private List<User> friends;
+    public String username;
+    public String email;
+    public String provider;
+    public String photoURL;
+    public List<Event> event;
+    public List<User> friends;
 
 
     public User() {
@@ -25,4 +25,8 @@ public class User {
         this.friends = friends;
     }
 
+    public String toString() {
+        String res = "name : "+username+"/n"+"email : "+email+"/n"+"provider : "+provider+"/n"+"photoURL : "+photoURL+"/n"+"events : "+event.toString()+"/n"+"friends : "+friends.toString();
+        return res;
+    }
 }

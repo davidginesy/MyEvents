@@ -10,6 +10,8 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
 
@@ -41,6 +43,7 @@ public class AuthActivity extends AppCompatActivity {
                                             new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build()))
                             .build(),
                     RC_SIGN_IN);
+
         }
 
     }

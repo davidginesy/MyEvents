@@ -83,10 +83,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         });
 */
             /************ Fin Stockage  ********************/
-// Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-        myRef.setValue("Hello, World!");
 
         View view = inflater.inflate(R.layout.profile_view, parent, false);
 
