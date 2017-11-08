@@ -11,6 +11,7 @@
         <item name="android:textColorPrimaryInverse">@color/primary_text_material_dark</item>
         <item name="android:textColorSecondary">@color/text_color_secondary</item>
         <item name="android:colorBackground">@color/background_color</item>
+        <item name="android:datePickerDialogTheme">@style/timePickerDialogTheme</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -30,15 +31,16 @@
     </style>
 
     <style name="timePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:timePickerStyle">@style/MyDatePickerHeader</item>
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:headerBackground">@color/colorPrimary</item>
         <item name="android:colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/primary_text_material_dark</item>
         <item name="colorControlNormal">@color/colorAccent</item>
         <item name="colorControlActivated">@color/colorAccent</item>
-        <item name="android:timePickerDialogTheme">@style/MyDatePickerHeader</item>
+
     </style>
-    <style name="MyDatePickerHeader" parent="android:style/Widget.Material.Light.DatePicker">
+    <style name="MyDatePickerHeader" parent="android:style/Widget.Material.Light.TimePicker">
         <item name="android:headerBackground">@color/colorPrimary</item>
     </style>
 
