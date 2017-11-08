@@ -134,12 +134,13 @@
             <TextView
                 android:id="@+id/eventPublic"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
-                android:lineSpacingExtra="8sp"
-                android:text="Public Event ?"
-                android:textAlignment="textStart"
+                android:text="Is the event public ?"
+                android:textAlignment="viewStart"
+                android:gravity="center_vertical"
+                android:textColor="@color/text_color_primary"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/eventGuest" />
@@ -149,10 +150,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
-                android:layout_marginTop="8dp"
                 android:checked="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/eventGuest" />
+                app:layout_constraintBaseline_toBaselineOf="@+id/eventPublic"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <Button
                 android:id="@+id/contactButton"

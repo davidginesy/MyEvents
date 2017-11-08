@@ -38,13 +38,11 @@ public class CreateEventActivity extends AppCompatActivity {
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 eventDate.setText(new SimpleDateFormat("dd/MM/yy").format(calendar.getTime()));
             }
-
-        };
-
+            };
         eventDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(CreateEventActivity.this, date, calendar
+                new DatePickerDialog(CreateEventActivity.this,R.style.datePickerDialogTheme, date, calendar
                         .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -61,13 +59,12 @@ public class CreateEventActivity extends AppCompatActivity {
                 int minute = mcurrentTime.get(Calendar.MINUTE);
 
                 TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(CreateEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                mTimePicker = new TimePickerDialog(CreateEventActivity.this,R.style.timePickerDialogTheme, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         eventTime.setText( selectedHour + ":" + selectedMinute);
                     }
                 }, hour, minute, true);
-                mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
 
             }

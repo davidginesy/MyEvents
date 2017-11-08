@@ -30,7 +30,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
-        app:itemTextColor="@color/textColorPrimary"
+        app:itemTextColor="@color/text_color_secondary"
         app:menu="@menu/activity_main_drawer">
 
     </android.support.design.widget.NavigationView>
