@@ -21,6 +21,7 @@
             android:fitsSystemWindows="true"
             android:background="?android:attr/colorPrimary"
             android:theme="@style/AppTheme.NoActionBar"
+            app:titleTextColor="@color/actionBar_text_color"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
