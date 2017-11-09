@@ -40,6 +40,7 @@ import java.net.URI;
 public class ProfileFragment extends Fragment implements View.OnClickListener {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
 
@@ -86,11 +87,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         View view = inflater.inflate(R.layout.profile_view, parent, false);
 
-        Button btn = (Button) view.findViewById(R.id.Log_out_button);
+        Button btn = view.findViewById(R.id.Log_out_button);
         btn.setOnClickListener(this);
-        Button btn2 = (Button) view.findViewById(R.id.Delete_button);
+        Button btn2 = view.findViewById(R.id.Delete_button);
         btn2.setOnClickListener(this);
-        ImageButton btn3 = (ImageButton) view.findViewById(R.id.add_friend);
+        ImageButton btn3 = view.findViewById(R.id.add_friend);
         btn3.setOnClickListener(this);
 
         final TextView nom = (TextView) view.findViewById(R.id.user_profile_name);
@@ -117,6 +118,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     break;
 
                 case R.id.Delete_button:
+                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                    mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).removeValue();
                     mAuth.getCurrentUser().delete();
                     mAuth.signOut();
                     Toast.makeText(getActivity(), "Account Deleted !",
@@ -127,6 +130,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 case R.id.add_friend:
                     Toast.makeText(getActivity(), "Friends !",
                             Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(getContext(), SearchFriends.class));
                     break;
 
                 default:
