@@ -45,7 +45,8 @@
 
         <activity
             android:name=".CreateEventActivity"
-            android:label="@string/title_activity_create_event" />
+            android:label="@string/title_activity_create_event"
+            />
         <activity android:name=".SearchFriends"></activity>
     </application>
 

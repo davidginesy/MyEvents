@@ -127,37 +127,7 @@ public class CreateEventActivity extends AppCompatActivity {
         Event eventCreated= new Event(name,theme,address,date,time,guests,isPublic,description,auth.getUid());
         final String eventID=mDatabase.child("events").push().getKey();
         mDatabase.child("events").child(eventID).setValue(eventCreated);
-        mDatabase.child("users").child("eventList").addChildEventListener(new ChildEventListener() {
-
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                List<Object> eventList=dataSnapshot.getValue(ArrayList.class);
-                eventList.add("eventID");
-                Map<String,Object> taskMap=new HashMap<>();
-                taskMap.put("eventList",eventList);
-                mDatabase.child("users").child(auth.getUid()).updateChildren(taskMap);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        mDatabase.child("users").child(auth.getUid()).child("eventList").push().setValue(eventID);
         Toast.makeText(this, "Event created!",
                 Toast.LENGTH_LONG).show();
         finish();
