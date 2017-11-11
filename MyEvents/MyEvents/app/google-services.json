@@ -15,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "999442087766-2dunrrv5343ji7jr8lvdal31uf8rbe5k.apps.googleusercontent.com",
+          "client_id": "999442087766-o0d1h1iibrn1q0pmqg12p6kt91vfesuk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.user.myevents",
@@ -23,13 +23,13 @@
           }
         },
         {
-          "client_id": "999442087766-okauv660o576bl4hkgd6ei6ck1urtldm.apps.googleusercontent.com",
+          "client_id": "999442087766-r3gqbud4d2qq87rbafs49qt46djn087l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCiAenb9vin39rghYA87RDYBBMGglYl5v8"
+          "current_key": "AIzaSyAX2SIPWDvwh_Iy_9HhGMA-fRFISBosEXw"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "999442087766-okauv660o576bl4hkgd6ei6ck1urtldm.apps.googleusercontent.com",
+              "client_id": "999442087766-r3gqbud4d2qq87rbafs49qt46djn087l.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

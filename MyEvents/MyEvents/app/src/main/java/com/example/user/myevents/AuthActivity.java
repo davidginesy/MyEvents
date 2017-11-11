@@ -17,7 +17,7 @@ import java.util.Arrays;
 
 public class AuthActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
-    public static final String user_mail = "com.example.user.myevnts.MESSAGE";
+    public static final String user_mail = "com.example.user.myevents.MESSAGE";
     FirebaseAuth auth = FirebaseAuth.getInstance();
 
 
