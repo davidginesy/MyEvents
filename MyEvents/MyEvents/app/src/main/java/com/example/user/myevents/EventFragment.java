@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,16 +50,14 @@ public class EventFragment extends Fragment {
             }
         });
         FirebaseAuth auth=FirebaseAuth.getInstance();
-        final DatabaseReference databaseRoot=FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference eventRef=FirebaseDatabase.getInstance().getReference("events");
         myEvents=new ArrayList<>();
-        Query eventQuery=databaseRoot.child("event").equalTo(auth.getUid(),"ownerID");
+
+        Query eventQuery=eventRef.orderByChild("ownerID").equalTo(auth.getUid());
         eventQuery.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                for(DataSnapshot snapshotChild:dataSnapshot.getChildren()){
-                    myEvents.add(snapshotChild.getValue(Event.class));
-                    Toast.makeText(getContext(),snapshotChild.getValue(Event.class).toString(),Toast.LENGTH_LONG).show();
-                }
+
             }
 
             @Override

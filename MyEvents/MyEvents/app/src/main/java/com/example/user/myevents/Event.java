@@ -19,6 +19,7 @@ public class Event {
     }
     public Event(String name,String theme,String address,String date,String time,String guests,boolean isPublic,String description,String ownerID){
         this.name=name;
+        this.theme=theme;
         this.address=address;
         this.date=date;
         this.time=time;
