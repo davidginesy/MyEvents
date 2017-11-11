@@ -27,4 +27,9 @@ public class Event {
         this.description=description;
         this.ownerID=ownerID;
     }
+
+    @Override
+    public String toString() {
+        return("Event name: "+name+"\nEvent Date: "+date+"\nEvent Hour:"+time);
+    }
 }

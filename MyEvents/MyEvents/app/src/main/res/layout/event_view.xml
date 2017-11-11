@@ -15,6 +15,7 @@
         app:srcCompat="@drawable/ic_add_black_24dp" />
 
     <ListView
+        android:id="@+id/eventViewList"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>
