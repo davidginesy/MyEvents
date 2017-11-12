@@ -13,11 +13,13 @@ public class Event {
     public boolean isPublic;
     public String description;
     public String ownerID;
+    public double longitude;
+    public double latitude;
 
     public Event(){
         //Default constructor
     }
-    public Event(String name,String theme,String address,String date,String time,String guests,boolean isPublic,String description,String ownerID){
+    public Event(String name,String theme,String address,String date,String time,String guests,boolean isPublic,String description,String ownerID, double longitude, double latitude){
         this.name=name;
         this.theme=theme;
         this.address=address;
@@ -27,6 +29,8 @@ public class Event {
         this.isPublic=isPublic;
         this.description=description;
         this.ownerID=ownerID;
+        this.latitude=latitude;
+        this.longitude=longitude;
     }
 
     @Override

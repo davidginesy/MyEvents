@@ -2,6 +2,8 @@ package com.example.user.myevents;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -103,7 +106,7 @@ public class CreateEventActivity extends AppCompatActivity {
         return true;
     }
 
-    public void createEvent(View v){
+    public void createEvent(View v) throws IOException {
         final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // Récupération du formulaire
@@ -124,10 +127,21 @@ public class CreateEventActivity extends AppCompatActivity {
         String description = eventDescription.getText().toString();
         final Switch eventPublicSwitch = (Switch) findViewById(R.id.eventPublicSwitch);
         boolean isPublic = eventPublicSwitch.isChecked();
-        Event eventCreated= new Event(name,theme,address,date,time,guests,isPublic,description,auth.getUid());
+        // Transormation de l'adresse en coordonnées GPS
+        double longitude = 0;
+        double latitude = 0;
+        Geocoder geocoder = new Geocoder(this);
+        List<Address> addresses = null;
+        addresses = geocoder.getFromLocationName(address, 1);
+        if(addresses.size() > 0) {
+            latitude= addresses.get(0).getLatitude();
+            longitude= addresses.get(0).getLongitude();
+        }
+        Event eventCreated= new Event(name,theme,address,date,time,guests,isPublic,description,auth.getUid(),latitude,longitude);
         final String eventID=mDatabase.child("events").push().getKey();
         mDatabase.child("events").child(eventID).setValue(eventCreated);
         mDatabase.child("users").child(auth.getUid()).child("eventList").push().setValue(eventID);
+
         Toast.makeText(this, "Event created!",
                 Toast.LENGTH_LONG).show();
         finish();
