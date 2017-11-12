@@ -2,6 +2,7 @@ package com.example.user.myevents;
 
 
 
+import android.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -63,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
             String photoUrl = auth.getCurrentUser().getPhotoUrl().toString();
             Picasso.with(getBaseContext()).load(photoUrl).fit().into(profilePicture);
         }
-
-
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content,new WelcomeFragment()).commit();
     }
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
