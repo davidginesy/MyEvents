@@ -163,8 +163,8 @@ public class CreateEventActivity extends AppCompatActivity {
             latitude= addresses.get(0).getLatitude();
             longitude= addresses.get(0).getLongitude();
         }
-        Event eventCreated= new Event(name,theme,address,date,time,guests,isPublic,description,auth.getUid(),latitude,longitude);
         final String eventID=mDatabase.child("events").push().getKey();
+        Event eventCreated= new Event(eventID,name,theme,address,date,time,guests,isPublic,description,auth.getUid(),latitude,longitude);
         mDatabase.child("events").child(eventID).setValue(eventCreated);
         mDatabase.child("users").child(auth.getUid()).child("eventList").push().setValue(eventID);
 

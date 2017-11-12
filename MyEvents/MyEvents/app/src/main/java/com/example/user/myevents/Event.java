@@ -4,6 +4,7 @@ package com.example.user.myevents;
 import java.util.List;
 
 public class Event {
+    public String eventID;
     public String name;
     public String theme;
     public String address;
@@ -19,7 +20,8 @@ public class Event {
     public Event(){
         //Default constructor
     }
-    public Event(String name,String theme,String address,String date,String time,String guests,boolean isPublic,String description,String ownerID, double longitude, double latitude){
+    public Event(String eventID,String name,String theme,String address,String date,String time,String guests,boolean isPublic,String description,String ownerID, double longitude, double latitude){
+        this.eventID=eventID;
         this.name=name;
         this.theme=theme;
         this.address=address;

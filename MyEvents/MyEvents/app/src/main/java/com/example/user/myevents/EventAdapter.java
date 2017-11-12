@@ -9,7 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class EventAdapter extends ArrayAdapter<Event> {
@@ -34,6 +42,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
             holder.txtDate = (TextView) convertView.findViewById(R.id.txtEventDate);
             holder.txtTime = (TextView) convertView.findViewById(R.id.txtEventTime);
             holder.txtDescription = (TextView) convertView.findViewById(R.id.txtEventDescription);
+            holder.txtGuest=(TextView) convertView.findViewById(R.id.txtEventGuest);
 
             convertView.setTag(holder);
         }
@@ -43,9 +52,20 @@ public class EventAdapter extends ArrayAdapter<Event> {
         holder.txtTheme.setText("Theme: "+event.theme);
         holder.txtAddress.setText("Address: "+event.address);
         holder.txtDate.setText("Date: "+event.date);
-        holder.txtTime.setText(event.time);
+        holder.txtTime.setText("Hour: "+event.time);
         holder.txtDescription.setText("Description: "+event.description);
+        holder.txtGuest.setText("Guest: "+event.guests);
 
+        final Button deleteBtn=(Button) convertView.findViewById(R.id.eventDeleteBtn);
+        deleteBtn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Log.d("BUTTON CLICK :","Delete button clicked");
+                DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
+
+            }
+        });
 
 
 
@@ -59,5 +79,6 @@ public class EventAdapter extends ArrayAdapter<Event> {
         public TextView txtDate;
         public TextView txtTime;
         public TextView txtDescription;
+        public TextView txtGuest;
     }
 }
