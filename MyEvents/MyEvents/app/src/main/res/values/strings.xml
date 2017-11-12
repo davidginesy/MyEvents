@@ -27,7 +27,7 @@
     <string name="event_theme">Event Theme</string>
     <string name="event_guest">Event Guest</string>
     <string name="event_description">Describe the event</string>
-    <string name="welcome_message">Welcome in MyEvents app</string>
-    <string name="getStarted_message">Hi, to get started click on the navigation menu on the top left of the screen</string>
+    <string name="welcome_message">Welcome to MyEvents app</string>
+    <string name="getStarted_message">Hi, to get started click on the navigation menu on the top left of your screen</string>
 
 </resources>
