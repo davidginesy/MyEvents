@@ -46,8 +46,12 @@ public class EventAdapter extends ArrayAdapter<Event> {
         holder.txtTime.setText(event.time);
         holder.txtDescription.setText("Description: "+event.description);
 
+
+
+        
         return convertView;
     }
+
     private class ViewHolder{
         public TextView txtName;
         public TextView txtTheme;
