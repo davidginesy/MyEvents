@@ -52,14 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        String photoURL=null;
-        if (!auth.getCurrentUser().getProviders().get(0).equals("password")){
-            photoURL=auth.getCurrentUser().getPhotoUrl().toString();
-        }
-        User user = new User(auth.getCurrentUser().getDisplayName(),auth.getCurrentUser().getEmail(),auth.getCurrentUser().getProviders().get(0),photoURL);
-// Write a message to the database
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").child(auth.getCurrentUser().getUid()).setValue(user);
+
         View v = navigationView.getHeaderView(0);
         final TextView nom = (TextView) v.findViewById(R.id.nom);
         nom.setText(auth.getCurrentUser().getDisplayName());

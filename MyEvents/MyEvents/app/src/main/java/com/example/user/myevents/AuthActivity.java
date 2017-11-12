@@ -55,8 +55,29 @@ public class AuthActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
 
                 startActivity(new Intent(this, MainActivity.class));
-                finish();
-                return;
+                String photoURL=null;
+                String s = null;
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                /*if (!auth.getCurrentUser().getProviders().get(0).equals("password")){
+                    photoURL=auth.getCurrentUser().getPhotoUrl().toString();
+                }*/
+                try{
+                    photoURL=auth.getCurrentUser().getPhotoUrl().toString();
+                    s = mDatabase.child("users").child(auth.getCurrentUser().getUid()).getKey();
+                }
+                finally {
+                    if(s == null){
+                    User user = new User(auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getEmail(), auth.getCurrentUser().getProviders().get(0), photoURL);
+                    mDatabase.child("users").child(auth.getCurrentUser().getUid()).setValue(user);
+                    finish();
+                    }
+                    else{
+                        finish();
+
+
+                }
+                }
+
             }
 
         }

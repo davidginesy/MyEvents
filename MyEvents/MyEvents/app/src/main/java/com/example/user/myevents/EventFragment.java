@@ -25,7 +25,9 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class EventFragment extends Fragment {
@@ -33,14 +35,10 @@ public class EventFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
-
-
-
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.event_view, parent, false);
+        final View view=inflater.inflate(R.layout.event_view, parent, false);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.btn_create_event);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,40 +48,48 @@ public class EventFragment extends Fragment {
             }
         });
         FirebaseAuth auth=FirebaseAuth.getInstance();
-        final DatabaseReference eventRef=FirebaseDatabase.getInstance().getReference("events");
-        myEvents=new ArrayList<>();
+        final DatabaseReference rootRef=FirebaseDatabase.getInstance().getReference();
+        Query eventListQuery=rootRef.child("users").child(auth.getUid()).child("eventList");
+            final Set<String> eventListId=new HashSet<>();
 
-        Query eventQuery=eventRef.orderByChild("ownerID").equalTo(auth.getUid());
-        eventQuery.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+           eventListQuery.addValueEventListener(new ValueEventListener() {
+               @Override
+               public void onDataChange(DataSnapshot dataSnapshot) {
+                   final long[] pendingLoadCount = { dataSnapshot.getChildrenCount() };
+                   for (DataSnapshot child : dataSnapshot.getChildren())
+                   {
+                       eventListId.add(child.getValue().toString());
+                   }
+                   myEvents=new ArrayList<>();
+                   for(String eventId: eventListId){
+                       Query eventInfoQuery=rootRef.child("events").child(eventId);
+                       Log.d("eventInfoKey QUERY====",eventId);
+                       eventInfoQuery.addValueEventListener(new ValueEventListener() {
+                           @Override
+                           public void onDataChange(DataSnapshot dataSnapshot) {
+                               myEvents.add(dataSnapshot.getValue(Event.class));
+                               Log.d("eventInfo QUERY====", dataSnapshot.getValue(Event.class).toString());
+                               pendingLoadCount[0]-=1;
 
-            }
+                               if(pendingLoadCount[0]==0){
+                                   EventAdapter eventAdapter=new EventAdapter(getActivity(),myEvents);
+                                   ListView listView=(ListView) view.findViewById(R.id.eventViewList);
+                                   listView.setAdapter(eventAdapter);
+                               }
+                           }
+                           @Override
+                           public void onCancelled(DatabaseError databaseError) {
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                           }
+                       });
+                   }
 
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        EventAdapter eventAdapter=new EventAdapter(this.getContext(),myEvents);
-        ListView listView=(ListView) view.findViewById(R.id.eventViewList);
-        listView.setAdapter(eventAdapter);
-        return view;
+               }
+               @Override
+               public void onCancelled(DatabaseError databaseError) {
+               }
+           });
+            return view;
     }
 
 

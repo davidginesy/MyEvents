@@ -4,8 +4,64 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp">
+
     <TextView
+        android:id="@+id/txtEventName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/displayEventInfo"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/text_color_primary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtEventTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txtEventName"
+        android:textColor="@color/text_color_primary" />
+
+    <TextView
+        android:id="@+id/txtEventAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txtEventTheme"
+        android:textColor="@color/text_color_primary" />
+
+    <TextView
+        android:id="@+id/txtEventDate"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txtEventAddress"
+        android:textColor="@color/text_color_primary" />
+
+    <TextView
+        android:id="@+id/txtEventTime"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txtEventDate"
+        android:layout_alignBottom="@+id/txtEventDate"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="100dp"
+        android:layout_marginStart="100dp"
+        android:textColor="@color/text_color_primary" />
+
+    <TextView
+        android:id="@+id/txtEventDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txtEventDate"
+        android:textColor="@color/text_color_primary" />
+
 </RelativeLayout>
