@@ -1,7 +1,9 @@
 package com.example.user.myevents;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.support.v7.app.ActionBar;
@@ -9,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -38,6 +41,7 @@ import java.util.Map;
 
 public class CreateEventActivity extends AppCompatActivity {
     FirebaseAuth auth=FirebaseAuth.getInstance();
+    String friendsAdded;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +51,12 @@ public class CreateEventActivity extends AppCompatActivity {
 
         final Calendar calendar = Calendar.getInstance();
         final EditText eventDate= (EditText) findViewById(R.id.eventDate);
+        final Button btn_addGuest= (Button) findViewById(R.id.contactButton);
+        btn_addGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(getApplicationContext(), SearchFriends.class),1);
+            }});
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -91,6 +101,22 @@ public class CreateEventActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                String result=data.getStringExtra("result");
+                friendsAdded=result;
+                final EditText eventGuest = (EditText) findViewById(R.id.eventGuest);
+                eventGuest.setText(friendsAdded);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
     }
 
     @Override
