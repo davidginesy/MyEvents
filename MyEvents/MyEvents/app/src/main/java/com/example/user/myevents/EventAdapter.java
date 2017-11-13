@@ -34,31 +34,31 @@ public class EventAdapter extends ArrayAdapter<Event> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_item, parent, false);
-            }
-            ViewHolder holder = (ViewHolder) convertView.getTag();
-            if(holder==null){
-                holder= new ViewHolder();
-                holder.txtName = (TextView) convertView.findViewById(R.id.txtEventName);
-                holder.txtTheme = (TextView) convertView.findViewById(R.id.txtEventTheme);
-                holder.txtAddress = (TextView) convertView.findViewById(R.id.txtEventAddress);
-                holder.txtDate = (TextView) convertView.findViewById(R.id.txtEventDate);
-                holder.txtTime = (TextView) convertView.findViewById(R.id.txtEventTime);
-                holder.txtDescription = (TextView) convertView.findViewById(R.id.txtEventDescription);
-                holder.txtGuest=(TextView) convertView.findViewById(R.id.txtEventGuest);
-                convertView.setTag(holder);
-            }
-                Event event = eventList.get(position);
-                holder.txtName.setText("Name: "+event.name);
-                holder.txtTheme.setText("Theme: "+event.theme);
-                holder.txtAddress.setText("Address: "+event.address);
-                holder.txtDate.setText("Date: "+event.date);
-                holder.txtTime.setText("Hour: "+event.time);
-                holder.txtDescription.setText("Description: "+event.description);
-                holder.txtGuest.setText("Guest: "+event.guests);
-        /*
-        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_item, parent, false);
+        }
+        ViewHolder holder = (ViewHolder) convertView.getTag();
+        if(holder==null){
+            holder= new ViewHolder();
+            holder.txtName = (TextView) convertView.findViewById(R.id.txtEventName);
+            holder.txtTheme = (TextView) convertView.findViewById(R.id.txtEventTheme);
+            holder.txtAddress = (TextView) convertView.findViewById(R.id.txtEventAddress);
+            holder.txtDate = (TextView) convertView.findViewById(R.id.txtEventDate);
+            holder.txtTime = (TextView) convertView.findViewById(R.id.txtEventTime);
+            holder.txtDescription = (TextView) convertView.findViewById(R.id.txtEventDescription);
+            holder.txtGuest=(TextView) convertView.findViewById(R.id.txtEventGuest);
+            convertView.setTag(holder);
+        }
+        Event event = eventList.get(position);
+        holder.txtName.setText("Name: "+event.name);
+        holder.txtTheme.setText("Theme: "+event.theme);
+        holder.txtAddress.setText("Address: "+event.address);
+        holder.txtDate.setText("Date: "+event.date);
+        holder.txtTime.setText("Hour: "+event.time);
+        holder.txtDescription.setText("Description: "+event.description);
+        holder.txtGuest.setText("Guest: "+event.guests);
+
+        /*convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 String eventID=event.eventID;
@@ -68,7 +68,6 @@ public class EventAdapter extends ArrayAdapter<Event> {
                 map.put("/users/"+userID+"/eventList/"+eventID,null);
                 databaseReference.updateChildren(map);
                 eventList.remove(position);
-                notifyDataSetChanged();
                 return true;
             }
         });*/

@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +29,7 @@ import java.util.Set;
 
 
 public class EventFragment extends Fragment {
-    List<Event> myEvents;
+    List<Event> myEvents=new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -44,42 +45,68 @@ public class EventFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        FirebaseAuth auth=FirebaseAuth.getInstance();
+        final FirebaseAuth auth=FirebaseAuth.getInstance();
         final DatabaseReference rootRef=FirebaseDatabase.getInstance().getReference();
+        final EventAdapter eventAdapter=new EventAdapter(getActivity(),myEvents);
+        ListView listView=(ListView) view.findViewById(R.id.eventViewList);
+        listView.setAdapter(eventAdapter);
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Event event=(Event)parent.getItemAtPosition(position);
+                String eventID=event.eventID;
+                String userID=auth.getCurrentUser().getUid();
+                Map<String, Object> map = new HashMap<>();
+                map.put("/events/" + eventID+ "/", null);
+                map.put("/users/"+userID+"/eventList/"+eventID,null);
+                rootRef.updateChildren(map);
+                myEvents.remove(position);
+                return true;
+            }
+        });
         Query eventListQuery=rootRef.child("users").child(auth.getCurrentUser().getUid()).child("eventList");
         final Set<String> eventListId=new HashSet<>();
-
-        eventListQuery.addValueEventListener(new ValueEventListener() {
+        eventListQuery.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                final long[] pendingLoadCount = { dataSnapshot.getChildrenCount() };
-                for (DataSnapshot child : dataSnapshot.getChildren()){
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                /*for (DataSnapshot child : dataSnapshot.getChildren()){
+                    eventListId.add(dataSnapshot.getKey());
 
-                    eventListId.add(child.getKey());
                 }
-                myEvents=new ArrayList<>();
+
                 for(String eventId: eventListId){
-                    Query eventInfoQuery=rootRef.child("events").child(eventId);
-                    Log.d("eventInfoKey QUERY====",eventId);
-                    eventInfoQuery.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            myEvents.add(dataSnapshot.getValue(Event.class));
-                            Log.d("eventInfo QUERY====", dataSnapshot.getValue(Event.class).toString());
-                            pendingLoadCount[0]-=1;
-                            if(pendingLoadCount[0]==0){
-                                EventAdapter eventAdapter=new EventAdapter(getActivity(),myEvents);
-                                ListView listView=(ListView) view.findViewById(R.id.eventViewList);
-                                listView.setAdapter(eventAdapter);
-                            }
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                        }
-                    });
-                }
+
+                }*/
+                Query eventInfoQuery=rootRef.child("events").child(dataSnapshot.getKey());
+                //Log.d("eventInfoKey QUERY====",eventId);
+                eventInfoQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        myEvents.add(dataSnapshot.getValue(Event.class));
+                        eventAdapter.notifyDataSetChanged();
+                        //Log.d("eventInfo QUERY====", dataSnapshot.getValue(Event.class).toString());
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
             }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                eventAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
