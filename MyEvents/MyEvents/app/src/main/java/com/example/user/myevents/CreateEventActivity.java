@@ -140,7 +140,11 @@ public class CreateEventActivity extends AppCompatActivity {
         String name = eventName.getText().toString();
         final EditText eventTheme = (EditText) findViewById(R.id.eventTheme);
         String theme = eventTheme.getText().toString();
+
+
         final EditText eventLocation = (EditText) findViewById(R.id.eventLocation);
+
+
         String address = eventLocation.getText().toString();
         final EditText eventDate = (EditText) findViewById(R.id.eventDate);
         String date = eventDate.getText().toString();

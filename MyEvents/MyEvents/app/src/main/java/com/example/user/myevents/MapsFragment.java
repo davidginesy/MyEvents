@@ -1,16 +1,23 @@
 package com.example.user.myevents;
 
 
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
-
+import android.content.Context;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.Manifest;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
@@ -38,6 +45,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     Double latitude;
     Double longitude;
     boolean ispublic;
+    String name;
+    String horaire;
+    String adresse;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -57,6 +67,16 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
+
+        //Test obtenir position de l'user
+        /*
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED){
+            mMap.setMyLocationEnabled(true);
+        } else {
+            // Show rationale and request permission.
+        }
+        */
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -66,11 +86,18 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                     ispublic = child.child("isPublic").getValue(boolean.class);
                     latitude = child.child("latitude").getValue(Double.class);
                     longitude = child.child("longitude").getValue(Double.class);
+                    name = child.child("name").getValue(String.class);
+                    horaire = child.child("date").getValue(String. class) + " " + child.child("time").getValue(String.class);
+                    adresse = child.child("adress").getValue(String.class);
                     Log.d("ok", latitude.toString());
                     Log.d("ok", longitude.toString());
                     if (ispublic){
                         LatLng latLng = new LatLng(latitude, longitude);
-                        mMap.addMarker(new MarkerOptions().position(latLng));
+                        mMap.addMarker(new MarkerOptions()
+                                .position(latLng)
+                                .title(name)
+                                .snippet(horaire)
+                        );
                     }
                 }
             }
@@ -84,8 +111,18 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
 
         //mMap.addMarker(new MarkerOptions().position(/*some location*/));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(/*some location*/, 10));
+        /*if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.
+                PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+            if (location != null) {
+
+            }
+        }*/
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(48.3347178,-71.3825182), 6));
+
     }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
