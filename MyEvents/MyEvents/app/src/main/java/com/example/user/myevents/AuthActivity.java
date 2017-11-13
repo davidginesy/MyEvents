@@ -4,16 +4,22 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class AuthActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
@@ -56,26 +62,36 @@ public class AuthActivity extends AppCompatActivity {
 
                 startActivity(new Intent(this, MainActivity.class));
                 String photoURL=null;
-                String s = null;
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                 /*if (!auth.getCurrentUser().getProviders().get(0).equals("password")){
                     photoURL=auth.getCurrentUser().getPhotoUrl().toString();
                 }*/
-                try{
-                    photoURL=auth.getCurrentUser().getPhotoUrl().toString();
-                    s = mDatabase.child("users").child(auth.getCurrentUser().getUid()).getKey();
-                }
-                finally {
-                    if(s == null){
+                photoURL=auth.getCurrentUser().getPhotoUrl().toString();
+                final List<String> registeredUsers=new ArrayList<>();
+                mDatabase.child("users").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for(DataSnapshot users:dataSnapshot.getChildren()){
+                            registeredUsers.add(users.getKey());
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                if(!registeredUsers.contains(auth.getCurrentUser().getUid())){
                     User user = new User(auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getEmail(), auth.getCurrentUser().getProviders().get(0), photoURL);
                     mDatabase.child("users").child(auth.getCurrentUser().getUid()).setValue(user);
                     finish();
-                    }
-                    else{
-                        finish();
-
-
                 }
+                else{
+                    finish();
+
+
+
                 }
 
             }
