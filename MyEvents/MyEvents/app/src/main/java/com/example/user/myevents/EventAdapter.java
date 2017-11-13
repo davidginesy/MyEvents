@@ -50,27 +50,14 @@ public class EventAdapter extends ArrayAdapter<Event> {
             convertView.setTag(holder);
         }
         Event event = eventList.get(position);
-        holder.txtName.setText("Name: "+event.name);
-        holder.txtTheme.setText("Theme: "+event.theme);
-        holder.txtAddress.setText("Address: "+event.address);
-        holder.txtDate.setText("Date: "+event.date);
-        holder.txtTime.setText("Hour: "+event.time);
-        holder.txtDescription.setText("Description: "+event.description);
-        holder.txtGuest.setText("Guest: "+event.guests);
+        if(event.name.length()>0) holder.txtName.setText("Name: "+event.name);
+        if(event.theme.length()>0) holder.txtTheme.setText("Theme: "+event.theme);
+        if(event.address.length()>0)holder.txtAddress.setText("Address: "+event.address);
+        if(event.date.length()>0) holder.txtDate.setText("Date: "+event.date);
+        if(event.time.length()>0) holder.txtTime.setText("Hour: "+event.time);
+        if(event.description.length()>0) holder.txtDescription.setText("Description: "+event.description);
+        if(event.guests.length()>0) holder.txtGuest.setText("Guest: "+event.guests);
 
-        /*convertView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                String eventID=event.eventID;
-                String userID=FirebaseAuth.getInstance().getCurrentUser().getUid();
-                Map<String, Object> map = new HashMap<>();
-                map.put("/events/" + eventID+ "/", null);
-                map.put("/users/"+userID+"/eventList/"+eventID,null);
-                databaseReference.updateChildren(map);
-                eventList.remove(position);
-                return true;
-            }
-        });*/
         return convertView;
     }
 

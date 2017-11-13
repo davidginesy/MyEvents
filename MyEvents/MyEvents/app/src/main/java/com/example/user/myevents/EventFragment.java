@@ -22,10 +22,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 
 public class EventFragment extends Fragment {
@@ -65,18 +64,9 @@ public class EventFragment extends Fragment {
             }
         });
         Query eventListQuery=rootRef.child("users").child(auth.getCurrentUser().getUid()).child("eventList");
-        final Set<String> eventListId=new HashSet<>();
         eventListQuery.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                /*for (DataSnapshot child : dataSnapshot.getChildren()){
-                    eventListId.add(dataSnapshot.getKey());
-
-                }
-
-                for(String eventId: eventListId){
-
-                }*/
                 Query eventInfoQuery=rootRef.child("events").child(dataSnapshot.getKey());
                 //Log.d("eventInfoKey QUERY====",eventId);
                 eventInfoQuery.addListenerForSingleValueEvent(new ValueEventListener() {

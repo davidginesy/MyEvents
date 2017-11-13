@@ -170,17 +170,18 @@
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
             android:weightSum="1.0"
-            app:layout_constraintTop_toBottomOf="@+id/eventDescription"
-            tools:layout_editor_absoluteX="16dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventDescription">
 
             <Button
                 android:id="@+id/eventCancelButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
+                android:onClick="cancelEvent"
                 android:text="Cancel"
                 android:textSize="18sp"
-                android:onClick="cancelEvent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/eventDescription" />
 
@@ -189,9 +190,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
+                android:onClick="createEvent"
                 android:text="Validate"
                 android:textSize="18sp"
-                android:onClick="createEvent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/eventDescription" />
 

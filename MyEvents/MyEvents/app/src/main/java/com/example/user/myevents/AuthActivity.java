@@ -62,37 +62,35 @@ public class AuthActivity extends AppCompatActivity {
 
                 startActivity(new Intent(this, MainActivity.class));
                 String photoURL=null;
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                 /*if (!auth.getCurrentUser().getProviders().get(0).equals("password")){
                     photoURL=auth.getCurrentUser().getPhotoUrl().toString();
                 }*/
-                photoURL=auth.getCurrentUser().getPhotoUrl().toString();
+                //photoURL=auth.getCurrentUser().getPhotoUrl().toString();
                 final List<String> registeredUsers=new ArrayList<>();
-                mDatabase.child("users").addValueEventListener(new ValueEventListener() {
+                mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for(DataSnapshot users:dataSnapshot.getChildren()){
                             registeredUsers.add(users.getKey());
                         }
+                        if(!registeredUsers.contains(auth.getCurrentUser().getUid())){
+                            User user = new User(auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getEmail(), auth.getCurrentUser().getProviders().get(0), auth.getCurrentUser().getPhotoUrl().toString());
+                            mDatabase.child("users").child(auth.getCurrentUser().getUid()).setValue(user);
+                            finish();
+                        }
+                        else{
+                            finish();
+                        }
 
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
                     }
                 });
-                if(!registeredUsers.contains(auth.getCurrentUser().getUid())){
-                    User user = new User(auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getEmail(), auth.getCurrentUser().getProviders().get(0), photoURL);
-                    mDatabase.child("users").child(auth.getCurrentUser().getUid()).setValue(user);
-                    finish();
-                }
-                else{
-                    finish();
 
 
-
-                }
 
             }
 
