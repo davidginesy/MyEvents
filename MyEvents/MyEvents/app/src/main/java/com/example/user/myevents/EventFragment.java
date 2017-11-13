@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,39 +50,39 @@ public class EventFragment extends Fragment {
         final Set<String> eventListId=new HashSet<>();
 
         eventListQuery.addValueEventListener(new ValueEventListener() {
-                                                 @Override
-                                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                                     final long[] pendingLoadCount = { dataSnapshot.getChildrenCount() };
-                                                     for (DataSnapshot child : dataSnapshot.getChildren())
-                                                     {
-                                                         eventListId.add(child.getKey());
-                                                     }
-                                                     myEvents=new ArrayList<>();
-                                                     for(String eventId: eventListId){
-                                                         Query eventInfoQuery=rootRef.child("events").child(eventId);
-                                                         //Log.d("eventInfoKey QUERY====",eventId);
-                                                         eventInfoQuery.addValueEventListener(new ValueEventListener() {
-                                                             @Override
-                                                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                 myEvents.add(dataSnapshot.getValue(Event.class));
-                                                                 //Log.d("eventInfo QUERY====", dataSnapshot.getValue(Event.class).toString());
-                                                                 pendingLoadCount[0]-=1;
-                                                                 if(pendingLoadCount[0]==0){
-                                                                     EventAdapter eventAdapter=new EventAdapter(getActivity(),myEvents);
-                                                                     ListView listView=(ListView) view.findViewById(R.id.eventViewList);
-                                                                     listView.setAdapter(eventAdapter);
-                                                                 }
-                                                             }
-                                                             @Override
-                                                             public void onCancelled(DatabaseError databaseError) {
-                                                             }
-                                                         });
-                                                     }
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final long[] pendingLoadCount = { dataSnapshot.getChildrenCount() };
+                for (DataSnapshot child : dataSnapshot.getChildren()){
 
-                                                 }
-                                                 @Override
-                                                 public void onCancelled(DatabaseError databaseError) {
-                                                 }
+                    eventListId.add(child.getKey());
+                }
+                myEvents=new ArrayList<>();
+                for(String eventId: eventListId){
+                    Query eventInfoQuery=rootRef.child("events").child(eventId);
+                    Log.d("eventInfoKey QUERY====",eventId);
+                    eventInfoQuery.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            myEvents.add(dataSnapshot.getValue(Event.class));
+                            Log.d("eventInfo QUERY====", dataSnapshot.getValue(Event.class).toString());
+                            pendingLoadCount[0]-=1;
+                            if(pendingLoadCount[0]==0){
+                                EventAdapter eventAdapter=new EventAdapter(getActivity(),myEvents);
+                                ListView listView=(ListView) view.findViewById(R.id.eventViewList);
+                                listView.setAdapter(eventAdapter);
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
                                              }
         );
 

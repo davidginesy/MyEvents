@@ -33,8 +33,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final Event event = eventList.get(position);
-        if(event!=null){
+
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_item, parent, false);
             }
@@ -50,6 +49,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
                 holder.txtGuest=(TextView) convertView.findViewById(R.id.txtEventGuest);
                 convertView.setTag(holder);
             }
+                Event event = eventList.get(position);
                 holder.txtName.setText("Name: "+event.name);
                 holder.txtTheme.setText("Theme: "+event.theme);
                 holder.txtAddress.setText("Address: "+event.address);
@@ -57,7 +57,6 @@ public class EventAdapter extends ArrayAdapter<Event> {
                 holder.txtTime.setText("Hour: "+event.time);
                 holder.txtDescription.setText("Description: "+event.description);
                 holder.txtGuest.setText("Guest: "+event.guests);
-        }
         /*
         convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
