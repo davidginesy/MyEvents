@@ -2,10 +2,11 @@
 <resources>
     <color name="colorPrimary">#424242</color>
     <color name="colorPrimaryDark">#1b1b1b</color>
-    <color name="colorAccent">#ff3d00</color>
+    <color name="colorAccent">#fbaf42</color >
+    <color name="colorAccentOld">#ff3d00</color >
     <color name="textColorPrimary">#212121</color>
     <color name="actionBar_text_color">#ffffff</color>
-    <color name="primary_text_material_dark">#000000</color>
+    <color name="primary_text_material_dark">#ffffff</color>
     <color name="text_color_primary">#ffffff</color>
     <color name="text_color_secondary">#ffffff</color>
     <color name="background_color">#6d6d6d</color>
