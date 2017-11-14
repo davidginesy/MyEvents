@@ -73,7 +73,7 @@ public class EventFragment extends Fragment {
                 holder.txtAddress.setText("Address: "+event.address);
                 holder.txtDate.setText("Date: "+event.date);
                 holder.txtTime.setText("Hour: "+event.time);
-                holder.txtDescription.setText("Description: "+event.description);
+                if(event.description!=null)holder.txtDescription.setText("Description: "+event.description);
                 holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {
