@@ -203,6 +203,9 @@ public class CreateEventActivity extends AppCompatActivity {
         updateQuery.put("/events/"+eventID,eventInfo);
         updateQuery.put("/eventList/"+userID+"/"+eventID,eventInfo);
         if(guests.length()>0) updateQuery.put("/eventGuestList/"+eventID,guests);
+        if (isPublic) {
+            updateQuery.put("/eventPublic/"+eventID+"/",eventInfo);
+        }
         mDatabase.updateChildren(updateQuery);
         Toast.makeText(this, "Event created!",
                 Toast.LENGTH_LONG).show();
