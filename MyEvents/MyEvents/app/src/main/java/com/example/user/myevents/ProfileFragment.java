@@ -2,40 +2,22 @@ package com.example.user.myevents;
 
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.*;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageMetadata;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
-
-import java.io.File;
-import java.net.URI;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -130,7 +112,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 case R.id.add_friend:
                     Toast.makeText(getActivity(), "Friends !",
                             Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getContext(), SearchFriends.class));
+                    startActivity(new Intent(getContext(), SearchFriendsActivity.class));
                     break;
 
                 default:

@@ -75,7 +75,7 @@ public class AuthActivity extends AppCompatActivity {
                             registeredUsers.add(users.getKey());
                         }
                         if(!registeredUsers.contains(auth.getCurrentUser().getUid())){
-                            User user = new User(auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getEmail(), auth.getCurrentUser().getProviders().get(0), auth.getCurrentUser().getPhotoUrl().toString());
+                            User user = new User(auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getEmail(), auth.getCurrentUser().getProviders().get(0), auth.getCurrentUser().getPhotoUrl().toString(),auth.getCurrentUser().getUid());
                             mDatabase.child("users").child(auth.getCurrentUser().getUid()).setValue(user);
                             finish();
                         }

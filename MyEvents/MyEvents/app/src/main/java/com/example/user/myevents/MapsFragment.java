@@ -133,7 +133,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         //mMap.addMarker(new MarkerOptions().position(/*some location*/));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(48.3347178,-71.3825182), 6));
 
-    });
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

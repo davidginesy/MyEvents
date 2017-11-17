@@ -58,7 +58,7 @@ public class CreateEventActivity extends AppCompatActivity {
         btn_addGuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(getApplicationContext(), SearchFriends.class),1);
+                startActivityForResult(new Intent(getApplicationContext(), InviteFriends.class),1);
             }});
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override

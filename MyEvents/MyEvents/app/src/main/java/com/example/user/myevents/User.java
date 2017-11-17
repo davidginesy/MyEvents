@@ -9,8 +9,7 @@ public class User {
     public String email;
     public String provider;
     public String photoURL;
-    public List<String> eventList;
-    public List<Object> friendsList;
+    public String UID;
 
 
     public User() {
@@ -18,19 +17,16 @@ public class User {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User(String username, String email, String provider, String photoURL) {
+    public User(String username, String email, String provider, String photoURL,String UID) {
         this.username = username;
         this.email = email;
         this.provider = provider;
         this.photoURL = photoURL;
+        this.UID=UID;
     }
 
     public String toString() {
-        String res = "name : "+username+"/n"+"email : "+email+"/n"+"provider : "+provider+"/n"+"photoURL : "+photoURL+"/n"+"events : "+eventList.toString()+"/n"+"friends : "+friendsList.toString();
+        String res = "name : "+username+"/n"+"email : "+email+"/n"+"provider : "+provider+"/n"+"photoURL : "+photoURL;
         return res;
-    }
-
-    public List<String> getEvents(){
-        return this.eventList;
     }
 }

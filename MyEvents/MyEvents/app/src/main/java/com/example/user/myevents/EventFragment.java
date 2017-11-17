@@ -74,6 +74,7 @@ public class EventFragment extends Fragment {
                 holder.txtDate.setText("Date: "+event.date);
                 holder.txtTime.setText("Hour: "+event.time);
                 if(event.description!=null)holder.txtDescription.setText("Description: "+event.description);
+
                 holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {
