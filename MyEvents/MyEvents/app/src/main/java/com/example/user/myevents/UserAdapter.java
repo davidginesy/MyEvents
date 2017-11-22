@@ -15,6 +15,7 @@ import java.util.List;
 
 import static com.example.user.myevents.SearchFriendsActivity.search;
 import static com.example.user.myevents.SearchFriendsActivity.selectedUserID;
+import static com.example.user.myevents.SearchFriendsActivity.selectedUser;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder>{
     private List<User> itemList ;
@@ -49,7 +50,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder>{
             public void onClick(View v) {
                 search.setText(user.username);
                 selectedUserID=user.UID;
-                Log.d("selectedUserID=",selectedUserID);
+                selectedUser=user;
+                //Log.d("selectedUserID=",selectedUserID);
                 notifyDataSetChanged();
 
             }

@@ -17,34 +17,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 
 public class CreateEventActivity extends AppCompatActivity {
     FirebaseAuth auth=FirebaseAuth.getInstance();
-    String friendsAdded;
+    List<User> guestList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,10 +47,12 @@ public class CreateEventActivity extends AppCompatActivity {
         final Calendar calendar = Calendar.getInstance();
         final EditText eventDate= (EditText) findViewById(R.id.eventDate);
         final Button btn_addGuest= (Button) findViewById(R.id.contactButton);
+
         btn_addGuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(getApplicationContext(), InviteFriends.class),1);
+                Intent intent=new Intent(CreateEventActivity.this,InviteFriendsActivity.class);
+                startActivityForResult(intent,1);
             }});
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -105,19 +99,19 @@ public class CreateEventActivity extends AppCompatActivity {
             }
         });
 
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
-                String result=data.getStringExtra("result");
-                friendsAdded=result;
-                final EditText eventGuest = (EditText) findViewById(R.id.eventGuest);
-                eventGuest.setText(friendsAdded);
+                final Spinner eventGuest = (Spinner) findViewById(R.id.eventGuest);
+                guestList=data.getParcelableArrayListExtra("guests");
+                eventGuest.setAdapter(new GuestSpinnerAdapter(CreateEventActivity.this,R.layout.guest_spinner_item,guestList));
             }
             if (resultCode == Activity.RESULT_CANCELED) {
-                //Write your code if there's no result
+
             }
         }
     }
@@ -170,18 +164,12 @@ public class CreateEventActivity extends AppCompatActivity {
             return;
         }
 
-        // A améliorer avec les contacts
-        final EditText eventGuest = (EditText) findViewById(R.id.eventGuest);
-        String guests = eventGuest.getText().toString();
-
-
         final EditText eventDescription = (EditText) findViewById(R.id.eventDescription);
         String description = eventDescription.getText().toString();
 
 
         final Switch eventPublicSwitch = (Switch) findViewById(R.id.eventPublicSwitch);
         boolean isPublic = eventPublicSwitch.isChecked();
-
 
         // Transormation de l'adresse en coordonnées GPS
         double longitude = 0;
@@ -202,13 +190,14 @@ public class CreateEventActivity extends AppCompatActivity {
         Map<String,Object> updateQuery=new HashMap<>();
         updateQuery.put("/events/"+eventID,eventInfo);
         updateQuery.put("/eventList/"+userID+"/"+eventID,eventInfo);
-        if(guests.length()>0) updateQuery.put("/eventGuestList/"+eventID,guests);
-        if (isPublic) {
-            updateQuery.put("/eventPublic/"+eventID+"/",eventInfo);
+        if(!guestList.isEmpty()){
+            for(User guest:guestList){
+                updateQuery.put("/eventGuestList/"+eventID+"/"+guest.UID,true);
+            }
         }
         mDatabase.updateChildren(updateQuery);
-        Toast.makeText(this, "Event created!",
-                Toast.LENGTH_LONG).show();
+        /*Toast.makeText(this, "Event created!",
+                Toast.LENGTH_LONG).show();*/
         finish();
     }
 

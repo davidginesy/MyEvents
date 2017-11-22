@@ -100,20 +100,6 @@
             app:layout_constraintTop_toBottomOf="@+id/eventTheme" />
 
         <EditText
-            android:id="@+id/eventGuest"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:hint="@string/event_guest"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toStartOf="@+id/contactButton"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/eventDate" />
-
-        <EditText
             android:id="@+id/eventDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -126,23 +112,23 @@
             android:selectAllOnFocus="false"
             android:singleLine="false"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.645"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/eventPublic" />
+            app:layout_constraintTop_toBottomOf="@+id/eventDate" />
 
         <TextView
             android:id="@+id/eventPublic"
             android:layout_width="wrap_content"
             android:layout_height="46dp"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
             android:text="Is the event public ?"
             android:textAlignment="viewStart"
-            android:gravity="center_vertical"
             android:textColor="@color/text_color_primary"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/eventGuest" />
+            app:layout_constraintTop_toBottomOf="@+id/eventDescription" />
 
         <Switch
             android:id="@+id/eventPublicSwitch"
@@ -161,18 +147,29 @@
             android:layout_marginTop="8dp"
             android:text="ADD GUESTS"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/eventGuest"
-            app:layout_constraintTop_toBottomOf="@+id/eventTime" />
+            app:layout_constraintTop_toBottomOf="@+id/eventPublic" />
+
+        <Spinner
+            android:id="@+id/eventGuest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/contactButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventPublic" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal"
             android:weightSum="1.0"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/eventDescription">
+            app:layout_constraintTop_toBottomOf="@+id/contactButton">
 
             <Button
                 android:id="@+id/eventCancelButton"
@@ -197,6 +194,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/eventDescription" />
 
         </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
 
 </ScrollView>

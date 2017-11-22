@@ -45,11 +45,13 @@
 
         <activity
             android:name=".CreateEventActivity"
-            android:label="@string/title_activity_create_event"
-            />
+            android:label="@string/title_activity_create_event" />
         <activity android:name=".SearchFriendsActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/searchFriends_Label"/>
+        <activity android:name=".InviteFriendsActivity"
             android:parentActivityName=".CreateEventActivity"
-            android:label="@string/searchFriends_Label"></activity>
+            android:label="@string/inviteFriend_label"/>
     </application>
 
 </manifest>

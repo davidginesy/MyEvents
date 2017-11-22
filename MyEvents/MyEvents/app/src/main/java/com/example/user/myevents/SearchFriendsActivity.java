@@ -28,6 +28,7 @@ public class SearchFriendsActivity extends AppCompatActivity {
     public static EditText search;
     public UserAdapter userAdapter;
     public static String selectedUserID;
+    public static User selectedUser;
     FirebaseUser auth=FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     List<User> userList=new ArrayList<>();
@@ -47,7 +48,7 @@ public class SearchFriendsActivity extends AppCompatActivity {
         friendAddValidatedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mDatabase.child("FriendList").child(auth.getUid()).child(selectedUserID).setValue(true);
+                mDatabase.child("FriendList").child(auth.getUid()).child(selectedUserID).setValue(selectedUser);
                 search.setText("");
                 userAdapter.notifyDataSetChanged();
                 Toast.makeText(SearchFriendsActivity.this, "Friend Added !",

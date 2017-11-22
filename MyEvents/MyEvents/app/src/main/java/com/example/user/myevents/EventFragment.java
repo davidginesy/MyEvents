@@ -135,7 +135,6 @@ public class EventFragment extends Fragment {
         public TextView txtDate;
         public TextView txtTime;
         public TextView txtDescription;
-        public TextView txtGuest;
         public View itemView;
 
         public EventHolder(View itemView) {
@@ -147,7 +146,6 @@ public class EventFragment extends Fragment {
             txtDate = (TextView) itemView.findViewById(R.id.txtEventDate);
             txtTime = (TextView) itemView.findViewById(R.id.txtEventTime);
             txtDescription = (TextView) itemView.findViewById(R.id.txtEventDescription);
-            txtGuest=(TextView) itemView.findViewById(R.id.txtEventGuest);
 
         }
     }
