@@ -84,7 +84,7 @@ public class InviteFriendsActivity extends AppCompatActivity{
     }
     public void setUserList(final List<User> userList){
 
-        mDatabase.child("FriendList").child(auth.getUid()).addChildEventListener(new ChildEventListener() {
+        mDatabase.child("friendList").child(auth.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     inviteList.add(dataSnapshot.getValue(User.class));
