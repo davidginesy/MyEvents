@@ -48,11 +48,11 @@ public class SearchFriendsActivity extends AppCompatActivity {
         friendAddValidatedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mDatabase.child("FriendList").child(auth.getUid()).child(selectedUserID).setValue(selectedUser);
+                mDatabase.child("friendList").child(auth.getUid()).child(selectedUserID).setValue(selectedUser);
                 search.setText("");
                 userAdapter.notifyDataSetChanged();
-                Toast.makeText(SearchFriendsActivity.this, "Friend Added !",
-                        Toast.LENGTH_LONG).show();
+                /*Toast.makeText(SearchFriendsActivity.this, "Friend Added !",
+                        Toast.LENGTH_LONG).show();*/
             }
         });
 
