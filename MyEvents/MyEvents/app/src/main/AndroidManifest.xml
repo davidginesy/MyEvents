@@ -23,6 +23,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service android:name=".InviteNotificationService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service android:name=".InviteInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
         <activity android:name=".AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,7 +47,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -45,13 +56,16 @@
 
         <activity
             android:name=".CreateEventActivity"
-            android:label="@string/title_activity_create_event" />
+            android:label="@string/title_activity_create_event"
+            android:screenOrientation="portrait"/>
         <activity android:name=".SearchFriendsActivity"
             android:parentActivityName=".MainActivity"
-            android:label="@string/searchFriends_Label"/>
+            android:label="@string/searchFriends_Label"
+            android:screenOrientation="portrait"/>
         <activity android:name=".InviteFriendsActivity"
             android:parentActivityName=".CreateEventActivity"
-            android:label="@string/inviteFriend_label"/>
+            android:label="@string/inviteFriend_label"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

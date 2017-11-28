@@ -68,12 +68,12 @@ public class EventFragment extends Fragment {
         eventAdapter=new FirebaseRecyclerAdapter<Event,EventHolder>(myEvents) {
             @Override
             public void onBindViewHolder(EventHolder holder, final int position, final Event event) {
-                holder.txtName.setText("Name: "+event.name);
-                holder.txtTheme.setText("Theme: "+event.theme);
-                holder.txtAddress.setText("Address: "+event.address);
-                holder.txtDate.setText("Date: "+event.date);
-                holder.txtTime.setText("Hour: "+event.time);
-                if(event.description!=null)holder.txtDescription.setText("Description: "+event.description);
+                holder.txtName.setText(event.name);
+                //holder.txtTheme.setText(event.theme);
+                holder.txtAddress.setText("At "+event.address);
+                holder.txtDate.setText("On "+event.date);
+                holder.txtTime.setText("at "+event.time);
+                //if(event.description!=null)holder.txtDescription.setText("Description: "+event.description);
 
                 holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
@@ -141,11 +141,11 @@ public class EventFragment extends Fragment {
             super(itemView);
             this.itemView=itemView;
             txtName = (TextView) itemView.findViewById(R.id.txtEventName);
-            txtTheme = (TextView) itemView.findViewById(R.id.txtEventTheme);
+            //txtTheme = (TextView) itemView.findViewById(R.id.txtEventTheme);
             txtAddress = (TextView) itemView.findViewById(R.id.txtEventAddress);
             txtDate = (TextView) itemView.findViewById(R.id.txtEventDate);
             txtTime = (TextView) itemView.findViewById(R.id.txtEventTime);
-            txtDescription = (TextView) itemView.findViewById(R.id.txtEventDescription);
+            //txtDescription = (TextView) itemView.findViewById(R.id.txtEventDescription);
 
         }
     }

@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:padding="12dp">
+
+<android.support.constraint.ConstraintLayout
+    android:background="?attr/colorPrimary"
     android:orientation="vertical"
-    android:padding="0dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
 
     <TextView
         android:id="@+id/txtEventName"
@@ -13,55 +20,50 @@
         android:layout_height="wrap_content"
 
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:textColor="@color/text_color_primary"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txtEventTheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textColor="@color/text_color_primary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEventName" />
 
     <TextView
         android:id="@+id/txtEventAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:textColor="@color/text_color_primary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEventTheme" />
+        android:layout_marginTop="8dp"
+        android:textColor="?android:attr/colorFocusedHighlight"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/txtEventDate" />
 
     <TextView
         android:id="@+id/txtEventDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:textColor="@color/text_color_primary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEventAddress" />
+        android:layout_marginTop="8dp"
+        android:textColor="?android:attr/textColorLink"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/txtEventName" />
 
     <TextView
         android:id="@+id/txtEventTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:textColor="@color/text_color_primary"
-        app:layout_constraintStart_toEndOf="@+id/txtEventDate"
-        app:layout_constraintTop_toTopOf="@+id/txtEventDate" />
-
-    <TextView
-        android:id="@+id/txtEventDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:textColor="@color/text_color_primary"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintStart_toEndOf="@+id/txtEventDate"
+        app:layout_constraintTop_toBottomOf="@+id/txtEventName" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEventTime" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_event_black_24dp" />
 
 </android.support.constraint.ConstraintLayout>
+</FrameLayout>
