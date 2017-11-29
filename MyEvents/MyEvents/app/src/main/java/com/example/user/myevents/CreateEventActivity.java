@@ -190,10 +190,14 @@ public class CreateEventActivity extends AppCompatActivity {
         Map<String,Object> updateQuery=new HashMap<>();
         updateQuery.put("/events/"+eventID,eventInfo);
         updateQuery.put("/eventList/"+userID+"/"+eventID,eventInfo);
-        if(!guestList.isEmpty()){
+        if(guestList != null){
             for(User guest:guestList){
                 updateQuery.put("/eventGuestList/"+eventID+"/"+guest.UID,true);
+                updateQuery.put("/userInvited/"+guest.UID+"/"+eventID, eventInfo);
             }
+        }
+        if (isPublic) {
+            updateQuery.put("/eventPublic/"+eventID+"/",eventInfo);
         }
         mDatabase.updateChildren(updateQuery);
         /*Toast.makeText(this, "Event created!",

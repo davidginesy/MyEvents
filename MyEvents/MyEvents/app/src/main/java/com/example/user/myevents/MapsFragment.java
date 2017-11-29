@@ -4,11 +4,14 @@ package com.example.user.myevents;
 import android.content.pm.PackageManager;
 //import android.location.*;
 
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.content.Context;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +32,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,9 +42,15 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 public class MapsFragment extends Fragment implements OnMapReadyCallback {
@@ -55,6 +65,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     String adresse;
     FirebaseAuth auth=FirebaseAuth.getInstance();
     String userID=auth.getCurrentUser().getUid();
+    private FusedLocationProviderClient mFusedLocationClient;
+    DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -63,7 +77,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         mapView = (MapView) v.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
-
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
         return v;
 
     }
@@ -74,8 +88,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
-        /*
         //Test obtenir position de l'user
+        /*
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED){
             mMap.setMyLocationEnabled(true);
@@ -84,8 +98,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         else {
             mMap.setMyLocationEnabled(false);
             // Show rationale and request permission.
-        }
-        */
+        }*/
 
 
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
@@ -93,36 +106,92 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                //display public events
                 for (DataSnapshot child : dataSnapshot.child("eventPublic").getChildren()) {
-                    latitude = child.child("latitude").getValue(Double.class);
-                    longitude = child.child("longitude").getValue(Double.class);
-                    name = child.child("name").getValue(String.class);
                     horaire = child.child("date").getValue(String.class) + " " + child.child("time").getValue(String.class);
-                    adresse = child.child("adress").getValue(String.class);
-                    Log.d("ok", latitude.toString());
-                    Log.d("ok", longitude.toString());
-                    LatLng latLng = new LatLng(latitude, longitude);
-                    mMap.addMarker(new MarkerOptions()
-                            .position(latLng)
-                            .title(name)
-                            .snippet(horaire));
+                    Date date = null;
+                    try {
+                        date = sourceFormat.parse(horaire);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Calendar cal =Calendar.getInstance();
+                    cal.setTime(date);
+                    cal.add(Calendar.HOUR_OF_DAY,3);
+                    date = cal.getTime();
+                    Date currDate = new Date();
+                    if (currDate.before(date)){
+                        latitude = child.child("latitude").getValue(Double.class);
+                        longitude = child.child("longitude").getValue(Double.class);
+                        name = child.child("name").getValue(String.class);
+                        adresse = child.child("adress").getValue(String.class);
+                        Log.d("ok", latitude.toString());
+                        Log.d("ok", longitude.toString());
+                        LatLng latLng = new LatLng(latitude, longitude);
+                        mMap.addMarker(new MarkerOptions()
+                                .position(latLng)
+                                .title(name)
+                                .snippet(horaire));
+                    }
                 }
-                /*
+
+                //display events invited
                 for (DataSnapshot child : dataSnapshot.child("userInvited").child(userID).getChildren()){
-                    latitude = child.child("latitude").getValue(Double.class);
-                    longitude = child.child("longitude").getValue(Double.class);
-                    name = child.child("name").getValue(String.class);
                     horaire = child.child("date").getValue(String.class) + " " + child.child("time").getValue(String.class);
-                    adresse = child.child("adress").getValue(String.class);
-                    Log.d("ok", latitude.toString());
-                    Log.d("ok", longitude.toString());
-                    LatLng latLng = new LatLng(latitude, longitude);
-                    mMap.addMarker(new MarkerOptions()
-                            .position(latLng)
-                            .title(name)
-                            .snippet(horaire));
+                    Date date = null;
+                    try {
+                        date = sourceFormat.parse(horaire);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Calendar cal =Calendar.getInstance();
+                    cal.setTime(date);
+                    cal.add(Calendar.HOUR_OF_DAY,3);
+                    date = cal.getTime();
+                    Date currDate = new Date();
+                    if (currDate.before(date)){
+                        latitude = child.child("latitude").getValue(Double.class);
+                        longitude = child.child("longitude").getValue(Double.class);
+                        name = child.child("name").getValue(String.class);
+                        adresse = child.child("adress").getValue(String.class);
+                        Log.d("ok", latitude.toString());
+                        Log.d("ok", longitude.toString());
+                        LatLng latLng = new LatLng(latitude, longitude);
+                        mMap.addMarker(new MarkerOptions()
+                                .position(latLng)
+                                .title(name)
+                                .snippet(horaire));
+                    }
                 }
-                */
+
+                //display events created
+                for (DataSnapshot child : dataSnapshot.child("eventList").child(userID).getChildren()){
+                    horaire = child.child("date").getValue(String.class) + " " + child.child("time").getValue(String.class);
+                    Date date = null;
+                    try {
+                        date = sourceFormat.parse(horaire);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Calendar cal =Calendar.getInstance();
+                    cal.setTime(date);
+                    cal.add(Calendar.HOUR_OF_DAY,3);
+                    date = cal.getTime();
+                    Date currDate = new Date();
+                    if (currDate.before(date)){
+                        latitude = child.child("latitude").getValue(Double.class);
+                        longitude = child.child("longitude").getValue(Double.class);
+                        name = child.child("name").getValue(String.class);
+                        adresse = child.child("adress").getValue(String.class);
+                        Log.d("ok", latitude.toString());
+                        Log.d("ok", longitude.toString());
+                        LatLng latLng = new LatLng(latitude, longitude);
+                        mMap.addMarker(new MarkerOptions()
+                                .position(latLng)
+                                .title(name)
+                                .snippet(horaire));
+                    }
+                }
             }
 
             @Override
