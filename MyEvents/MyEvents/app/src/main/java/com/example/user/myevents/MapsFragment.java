@@ -185,6 +185,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                         adresse = child.child("adress").getValue(String.class);
                         Log.d("ok", latitude.toString());
                         Log.d("ok", longitude.toString());
+                        Log.d("ok","coucou");
                         LatLng latLng = new LatLng(latitude, longitude);
                         mMap.addMarker(new MarkerOptions()
                                 .position(latLng)
