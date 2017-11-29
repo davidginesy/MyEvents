@@ -10,7 +10,7 @@ public class Event {
     public String address;
     public String date;
     public String time;
-    //public String guests;
+    public String owner;
     public boolean isPublic;
     public String description;
     public double longitude;
@@ -19,13 +19,14 @@ public class Event {
     public Event(){
         //Default constructor
     }
-    public Event(String eventKey,String name,String theme,String address,String date,String time,boolean isPublic,String description, double longitude, double latitude){
+    public Event(String eventKey,String name,String theme,String address,String date,String time,String owner,boolean isPublic,String description, double longitude, double latitude){
         this.eventKey=eventKey;
         this.name=name;
         this.theme=theme;
         this.address=address;
         this.date=date;
         this.time=time;
+        this.owner=owner;
         this.isPublic=isPublic;
         this.description=description;
         this.latitude=latitude;

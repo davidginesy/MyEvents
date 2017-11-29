@@ -13,19 +13,20 @@ public class User implements Parcelable{
     public String provider;
     public String photoURL;
     public String UID;
-
+    public String token;
 
     public User() {
 
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User(String username, String email, String provider, String photoURL,String UID) {
+    public User(String username, String email, String provider, String photoURL,String UID,String token) {
         this.username = username;
         this.email = email;
         this.provider = provider;
         this.photoURL = photoURL;
         this.UID=UID;
+        this.token=token;
     }
 
     public User(Parcel in){
@@ -34,6 +35,7 @@ public class User implements Parcelable{
         this.provider=in.readString();
         this.photoURL=in.readString();
         this.UID=in.readString();
+        this.token=in.readString();
     }
     public String toString() {
         String res = "name : "+username+"/n"+"email : "+email+"/n"+"provider : "+provider+"/n"+"photoURL : "+photoURL;
@@ -55,6 +57,7 @@ public class User implements Parcelable{
         parcel.writeString(provider);
         parcel.writeString(photoURL);
         parcel.writeString(UID);
+        parcel.writeString(token);
     }
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
 

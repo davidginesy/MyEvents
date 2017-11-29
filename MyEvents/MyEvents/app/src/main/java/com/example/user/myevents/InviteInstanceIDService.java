@@ -3,24 +3,38 @@ package com.example.user.myevents;
 
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 /**
  * Created by Alexandre on 28/11/2017.
  */
 
 public class InviteInstanceIDService extends FirebaseInstanceIdService {
+
     private static final String TAG = "FirebaseIDService";
+
 
     @Override
     public void onTokenRefresh() {
         // Get updated InstanceID token.
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "Refreshed token: " + refreshedToken);
-
-        // TODO: Implement this method to send any registration to your app's servers.
+            FirebaseDatabase.getInstance().getReference()
+                    .child("users")
+                    .child(firebaseUser.getUid())
+                    .child("token")
+                    .setValue(refreshedToken);
         sendRegistrationToServer(refreshedToken);
+
+        String myNotification="notification_"+firebaseUser.getUid();
+        FirebaseMessaging.getInstance()
+                .subscribeToTopic(myNotification);
     }
 
     /**

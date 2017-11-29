@@ -186,7 +186,7 @@ public class CreateEventActivity extends AppCompatActivity {
         // Ajout du nouvel event dans la bdd
         final String eventID=mDatabase.child("events").push().getKey();
         final String userID=auth.getCurrentUser().getUid();
-        Event eventInfo= new Event(eventID,name,theme,address,date,time,isPublic,description,longitude,latitude);
+        Event eventInfo= new Event(eventID,name,theme,address,date,time,auth.getCurrentUser().getDisplayName(),isPublic,description,longitude,latitude);
         Map<String,Object> updateQuery=new HashMap<>();
         updateQuery.put("/events/"+eventID,eventInfo);
         updateQuery.put("/eventList/"+userID+"/"+eventID,eventInfo);
@@ -199,6 +199,7 @@ public class CreateEventActivity extends AppCompatActivity {
         if (isPublic) {
             updateQuery.put("/eventPublic/"+eventID+"/",eventInfo);
         }
+
         mDatabase.updateChildren(updateQuery);
         /*Toast.makeText(this, "Event created!",
                 Toast.LENGTH_LONG).show();*/

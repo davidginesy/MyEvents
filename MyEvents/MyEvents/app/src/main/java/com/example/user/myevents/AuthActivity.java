@@ -16,6 +16,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,8 +77,12 @@ public class AuthActivity extends AppCompatActivity {
                             registeredUsers.add(users.getKey());
                         }
                         if(!registeredUsers.contains(auth.getCurrentUser().getUid())){
-                            User user = new User(auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getEmail(), auth.getCurrentUser().getProviders().get(0), auth.getCurrentUser().getPhotoUrl().toString(),auth.getCurrentUser().getUid());
+                            String token = FirebaseInstanceId.getInstance().getToken();
+                            User user = new User(auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getEmail(), auth.getCurrentUser().getProviders().get(0), auth.getCurrentUser().getPhotoUrl().toString(),auth.getCurrentUser().getUid(),token);
                             mDatabase.child("users").child(auth.getCurrentUser().getUid()).setValue(user);
+                            String myNotification="notification_"+auth.getCurrentUser().getUid();
+                            FirebaseMessaging.getInstance()
+                                    .subscribeToTopic(myNotification);
                             finish();
                         }
                         else{
