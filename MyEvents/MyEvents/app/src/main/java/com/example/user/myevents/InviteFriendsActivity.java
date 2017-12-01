@@ -59,13 +59,13 @@ public class InviteFriendsActivity extends AppCompatActivity{
                             public void onClick(DialogInterface dialog, int which) {
                                 List<User> invitedList=new ArrayList<>();
                                 Integer size = inviteAdapter.inviteChecked.size();
-                                Log.d("BOOLEAN SIZE",size.toString());
+                                //Log.d("BOOLEAN SIZE",size.toString());
                                 for(int i=0;i<size;i++){
                                     if(inviteAdapter.inviteChecked.get(i)){
-                                        Log.d("BOOLEAN VALUE==","true");
+                                       // Log.d("BOOLEAN VALUE==","true");
                                         invitedList.add(inviteList.get(i));
                                     }
-                                    else Log.d("BOOLEAN VALUE==","false");
+                                   // else Log.d("BOOLEAN VALUE==","false");
                                 }
                                 Intent intent=new Intent();
                                 intent.putParcelableArrayListExtra("guests",(ArrayList) invitedList);

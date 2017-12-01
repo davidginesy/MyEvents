@@ -96,7 +96,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     mAuth.signOut();
                     Toast.makeText(getActivity(), "Log Out !",
                             Toast.LENGTH_LONG).show();
-                    getActivity().finish();
+                    startActivity(new Intent(getContext(),AuthActivity.class));
                     break;
 
                 case R.id.Delete_button:

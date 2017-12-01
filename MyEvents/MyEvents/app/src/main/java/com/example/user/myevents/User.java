@@ -14,6 +14,7 @@ public class User implements Parcelable{
     public String photoURL;
     public String UID;
     public String token;
+    public String hasAcceptedInvitation="pending";
 
     public User() {
 
@@ -36,6 +37,7 @@ public class User implements Parcelable{
         this.photoURL=in.readString();
         this.UID=in.readString();
         this.token=in.readString();
+        this.hasAcceptedInvitation=in.readString();
     }
     public String toString() {
         String res = "name : "+username+"/n"+"email : "+email+"/n"+"provider : "+provider+"/n"+"photoURL : "+photoURL;
@@ -58,6 +60,7 @@ public class User implements Parcelable{
         parcel.writeString(photoURL);
         parcel.writeString(UID);
         parcel.writeString(token);
+        parcel.writeString(hasAcceptedInvitation);
     }
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
 

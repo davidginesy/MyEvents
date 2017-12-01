@@ -166,6 +166,10 @@ public class CreateEventActivity extends AppCompatActivity {
 
         final EditText eventDescription = (EditText) findViewById(R.id.eventDescription);
         String description = eventDescription.getText().toString();
+        if(TextUtils.isEmpty(description)) {
+            eventTime.setError("This field cannot be empty!");
+            return;
+        }
 
 
         final Switch eventPublicSwitch = (Switch) findViewById(R.id.eventPublicSwitch);
@@ -192,7 +196,7 @@ public class CreateEventActivity extends AppCompatActivity {
         updateQuery.put("/eventList/"+userID+"/"+eventID,eventInfo);
         if(guestList != null){
             for(User guest:guestList){
-                updateQuery.put("/eventGuestList/"+eventID+"/"+guest.UID,true);
+                updateQuery.put("/eventGuestList/"+eventID+"/"+guest.UID,guest);
                 updateQuery.put("/userInvited/"+guest.UID+"/"+eventID, eventInfo);
             }
         }
