@@ -45,6 +45,7 @@ public class Event implements Parcelable{
         this.time=in.readString();
         this.owner=in.readString();
         this.description=in.readString();
+        this.eventKey=in.readString();
         in.readTypedList(this.guestList,User.CREATOR);
     }
     public void setGuestList(ArrayList<User> guestList){
@@ -76,6 +77,7 @@ public class Event implements Parcelable{
         parcel.writeString(time);
         parcel.writeString(owner);
         parcel.writeString(description);
+        parcel.writeString(eventKey);
         parcel.writeTypedList(guestList);
     }
     public static final Parcelable.Creator<Event> CREATOR = new Parcelable.Creator<Event>() {
