@@ -1,7 +1,9 @@
 package com.example.user.myevents;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,7 +52,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    inviteAccepted(event.eventKey);
+                    inviteAccepted(event.eventKey,view);
                 }
             });
             Button declineButton=findViewById(R.id.eventDeclineBtn);
@@ -58,7 +60,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             declineButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    inviteDeclined(event.eventKey);
+                    inviteDeclined(event.eventKey,view);
                 }
             });
 
@@ -104,17 +106,53 @@ public class EventDetailsActivity extends AppCompatActivity {
         return true;
     }
 
-    private void inviteAccepted(String eventID){
+    private void inviteAccepted(final String eventID, View view){
         currentUser=FirebaseAuth.getInstance().getCurrentUser();
         db=FirebaseDatabase.getInstance().getReference();
-        db.child("eventGuestList").child(eventID).child(currentUser.getUid()).child("hasAcceptedInvitation").setValue("accepted");
-        finish();
+
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(view.getContext(), android.R.style.Theme_Material_Dialog_NoActionBar_MinWidth);
+        builder.setTitle("Lift options")
+                .setMessage("Will take your car ?")
+                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        db.child("eventGuestList").child(eventID).child(currentUser.getUid()).child("hasAcceptedInvitation").setValue("accepted");
+                        db.child("eventGuestList").child(eventID).child(currentUser.getUid()).child("hasCar").setValue("true");
+                        finish();
+
+                    }
+                })
+                .setNegativeButton("no", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        db.child("eventGuestList").child(eventID).child(currentUser.getUid()).child("hasAcceptedInvitation").setValue("accepted");
+                        db.child("eventGuestList").child(eventID).child(currentUser.getUid()).child("hasCar").setValue("false");
+                        finish();
+                    }
+                })
+                .setIcon(R.drawable.car)
+                .show();
     }
-    private void inviteDeclined(String eventID){
+    private void inviteDeclined(final String eventID, View view){
         currentUser=FirebaseAuth.getInstance().getCurrentUser();
         db=FirebaseDatabase.getInstance().getReference();
-        db.child("eventGuestList").child(eventID).child(currentUser.getUid()).child("hasAcceptedInvitation").setValue("declined");
-        finish();
+
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(view.getContext(), android.R.style.Theme_Material_Dialog_NoActionBar_MinWidth);
+        builder.setTitle("Confirm decline")
+                .setMessage("Are you sure you want to decline the invitation?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        db.child("eventGuestList").child(eventID).child(currentUser.getUid()).child("hasAcceptedInvitation").setValue("declined");
+                        finish();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }
 

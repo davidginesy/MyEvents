@@ -17,7 +17,6 @@
             android:layout_height="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/guestName"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -38,8 +37,18 @@
             android:textColor="@color/actionBar_text_color"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guestStatusIcon"
+            app:layout_constraintEnd_toStartOf="@+id/guestCar"
             app:layout_constraintStart_toEndOf="@+id/guestProfilePic"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/guestCar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guestStatusIcon"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>
