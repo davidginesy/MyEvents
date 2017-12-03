@@ -24,6 +24,7 @@ public class EventFragment extends Fragment {
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("My Events ").setIcon(R.drawable.ic_event_black_24dp));
         tabLayout.addTab(tabLayout.newTab().setText("Invitations").setIcon(android.R.drawable.ic_menu_view));
+        tabLayout.addTab(tabLayout.newTab().setText("Ratings").setIcon(R.drawable.star_half));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);

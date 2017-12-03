@@ -139,10 +139,12 @@ public class EventDetailsActivity extends AppCompatActivity {
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(view.getContext(), android.R.style.Theme_Material_Dialog_NoActionBar_MinWidth);
         builder.setTitle("Confirm decline")
-                .setMessage("Are you sure you want to decline the invitation?")
+                .setMessage("Are you sure you want to decline the invitation? \n THIS IS DEFINITIVE")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         db.child("eventGuestList").child(eventID).child(currentUser.getUid()).child("hasAcceptedInvitation").setValue("declined");
+                        db.child("eventGuestList").child(eventID).child(currentUser.getUid()).child("hasCar").setValue("false");
+                        db.child("userInvited").child(currentUser.getUid()).removeValue();
                         finish();
                     }
                 })

@@ -60,7 +60,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, monthOfYear);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                eventDate.setText(new SimpleDateFormat("dd/MM/yy").format(calendar.getTime()));
+                eventDate.setText(new SimpleDateFormat("yy/MM/dd").format(calendar.getTime()));
             }
             };
         eventDate.setOnClickListener(new View.OnClickListener() {

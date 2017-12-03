@@ -24,13 +24,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Alexandre on 02/12/2017.
- */
+
 
 public class EventCreatedFragment extends Fragment {
     RecyclerView eventView;
@@ -68,8 +68,12 @@ public class EventCreatedFragment extends Fragment {
         //Requete pour recuperer les events d'un utilisateur
         auth =FirebaseAuth.getInstance();
         rootRef= FirebaseDatabase.getInstance().getReference();
+
+
         final String userId=auth.getCurrentUser().getUid();
-        Query myEventsQuery=rootRef.child("eventList").child(userId);
+
+        String currentDate=new SimpleDateFormat("yy/MM/dd").format(Calendar.getInstance().getTime());
+        Query myEventsQuery=rootRef.child("eventList").child(userId).orderByChild("date").startAt(currentDate);
         final FirebaseRecyclerOptions<Event> myEvents =
                 new FirebaseRecyclerOptions.Builder<Event>()
                         .setQuery(myEventsQuery, Event.class)

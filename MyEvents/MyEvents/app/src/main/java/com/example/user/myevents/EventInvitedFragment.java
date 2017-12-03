@@ -23,7 +23,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,7 +57,9 @@ public class EventInvitedFragment extends Fragment {
         auth =FirebaseAuth.getInstance();
         rootRef= FirebaseDatabase.getInstance().getReference();
         final String userId=auth.getCurrentUser().getUid();
-        Query myEventsQuery=rootRef.child("userInvited").child(userId);
+        String currentDate=new SimpleDateFormat("yy/MM/dd").format(Calendar.getInstance().getTime());
+        Log.d("Date",currentDate);
+        Query myEventsQuery=rootRef.child("userInvited").child(userId).orderByChild("date").startAt(currentDate);
         final FirebaseRecyclerOptions<Event> myEvents =
                 new FirebaseRecyclerOptions.Builder<Event>()
                         .setQuery(myEventsQuery, Event.class)

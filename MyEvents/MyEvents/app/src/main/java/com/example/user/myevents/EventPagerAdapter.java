@@ -24,6 +24,9 @@ public class EventPagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 EventInvitedFragment tab2 = new EventInvitedFragment();
                 return tab2;
+            case 2:
+                EventPastFragment tab3=new EventPastFragment();
+                return tab3;
 
             default:
                 return null;
