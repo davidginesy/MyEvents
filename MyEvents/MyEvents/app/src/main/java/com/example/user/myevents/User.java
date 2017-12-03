@@ -14,7 +14,7 @@ public class User implements Parcelable{
     public String photoURL;
     public String UID;
     public String token;
-    public String hasAcceptedInvitation="pending";
+    public String hasAcceptedInvitation;
 
     public User() {
 
@@ -28,6 +28,7 @@ public class User implements Parcelable{
         this.photoURL = photoURL;
         this.UID=UID;
         this.token=token;
+        this.hasAcceptedInvitation="pending";
     }
 
     public User(Parcel in){

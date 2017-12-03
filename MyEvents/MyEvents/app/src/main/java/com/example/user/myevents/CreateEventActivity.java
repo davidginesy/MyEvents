@@ -7,10 +7,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -99,7 +98,6 @@ public class CreateEventActivity extends AppCompatActivity {
             }
         });
 
-
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -167,7 +165,7 @@ public class CreateEventActivity extends AppCompatActivity {
         final EditText eventDescription = (EditText) findViewById(R.id.eventDescription);
         String description = eventDescription.getText().toString();
         if(TextUtils.isEmpty(description)) {
-            eventTime.setError("This field cannot be empty!");
+            eventDescription.setError("This field cannot be empty!");
             return;
         }
 

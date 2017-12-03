@@ -85,6 +85,7 @@ public class EventCreatedFragment extends Fragment {
                 holder.txtTime.setText("at "+event.time);
                 //if(event.description!=null)holder.txtDescription.setText("Description: "+event.description);
                 final String eventID=myEvents.getSnapshots().get(position).eventKey;
+                final boolean isPublic = myEvents.getSnapshots().get(position).isPublic;
                 event.setGuestList(getGuestListFromDB(eventID));
                 holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
@@ -100,6 +101,12 @@ public class EventCreatedFragment extends Fragment {
                                         deleteQuery.put("/events/"+eventID,null);
                                         deleteQuery.put("/eventList/"+userId+"/"+eventID,null);
                                         deleteQuery.put("/eventGuestList/"+eventID,null);
+                                        if (isPublic){
+                                            deleteQuery.put("/eventPublic/"+eventID, null);
+                                        }
+                                        for (int i=0; i<event.getGuestList().size();i++){
+                                            deleteQuery.put("/userInvited/"+event.getGuestList().get(i).UID+"/"+eventID, null);
+                                        }
                                         rootRef.updateChildren(deleteQuery);
                                     }
                                 })

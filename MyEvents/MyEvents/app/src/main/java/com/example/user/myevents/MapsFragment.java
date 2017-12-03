@@ -59,7 +59,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private MapView mapView;
     Double latitude;
     Double longitude;
-    boolean ispublic;
     String name;
     String horaire;
     String adresse;
@@ -201,7 +200,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             }
         });
         //mMap.addMarker(new MarkerOptions().position(/*some location*/));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(48.3347178,-71.3825182), 6));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(48.3342613,-71.3825114), 10));
 
     }
 

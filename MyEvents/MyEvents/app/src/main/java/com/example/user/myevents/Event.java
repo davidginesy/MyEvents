@@ -23,7 +23,8 @@ public class Event implements Parcelable{
     public Event(){
         //Default constructor
     }
-    public Event(String eventKey,String name,String theme,String address,String date,String time,String owner,boolean isPublic,String description, double longitude, double latitude){
+    public Event(String eventKey,String name,String theme,String address,String date,String time,String owner,boolean isPublic,
+                 String description, double longitude, double latitude){
         this.eventKey=eventKey;
         this.name=name;
         this.theme=theme;

@@ -8,12 +8,16 @@ admin.initializeApp(functions.config().firebase);
 //  response.send("Hello from Firebase!");
 // });
 
-exports.sendNotification = functions.database.ref('/eventGuestList/{eventId}/{userId}')
+exports.sendNotification = functions.database.ref('/userInvited/{userId}/{eventId}')
     .onCreate(event => {
         const userId = event.params.userId;
-        const eventId = event.params.eventId
-        console.log('Push notification triggered');
+        const eventId = event.params.eventId;
+		var eventInfo = event.data.val();
+		
+		
+        console.log('this is a test');
         console.log('User invited id is', userId);
+		console.log('Event info', eventInfo);
         // Create a notification
         const payload = {
             notification: {
@@ -21,6 +25,9 @@ exports.sendNotification = functions.database.ref('/eventGuestList/{eventId}/{us
                 body: "YOU HAVE BEEN INVITED",
                 sound: "default"
             },
+			/*data:{
+				"eventId" : eventId
+			}*/
         };
 
         //Create an options object that contains the time to live for the notification and the priority
