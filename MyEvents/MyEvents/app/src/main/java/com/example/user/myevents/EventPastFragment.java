@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -69,18 +70,12 @@ public class EventPastFragment extends Fragment {
                 public void onBindViewHolder(EventPastHolder holder, final int position, final Event event) {
                     holder.txtName.setText(event.name);
                     holder.txtTime.setText("Was on "+event.date+" at "+event.time);
-                    //if(event.description!=null)holder.txtDescription.setText("Description: "+event.description);
-                    //final String eventID=myEvents.getSnapshots().get(position).eventKey;
-                    //event.setGuestList(getGuestListFromDB(eventID));
-                    /*holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(getActivity(),EventDetailsActivity.class);
-                            intent.putExtra("event",event);
-                            intent.putExtra("isInvitation",true);
-                            startActivity(intent);
+
                         }
-                    });*/
+                    });
 
 
 
@@ -138,16 +133,16 @@ public class EventPastFragment extends Fragment {
         }
         private class EventPastHolder extends RecyclerView.ViewHolder {
             public TextView txtName;
-            //public TextView txtDate;
             public TextView txtTime;
+            public RatingBar ratingBar;
             public View itemView;
 
             public EventPastHolder(View itemView) {
                 super(itemView);
                 this.itemView=itemView;
                 txtName = (TextView) itemView.findViewById(R.id.eventPastName);
-                //txtDate = (TextView) itemView.findViewById(R.id.txtEventDate);
                 txtTime = (TextView) itemView.findViewById(R.id.eventPastTime);
+                ratingBar=(RatingBar) itemView.findViewById(R.id.ratingBar);
 
             }
         }
