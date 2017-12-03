@@ -1,6 +1,7 @@
 package com.example.user.myevents;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,9 @@ public class GuestAdapter extends RecyclerView.Adapter<GuestAdapter.GuestHolder>
                 holder.guestStatus.setImageResource(android.R.drawable.presence_away);
                 break;
         }
+        if(user.hasCar.equals("true")){
+            holder.guestCar.setImageResource(R.drawable.car);
+        }
     }
 
     @Override
@@ -57,6 +61,7 @@ public class GuestAdapter extends RecyclerView.Adapter<GuestAdapter.GuestHolder>
     public TextView guestName;
     public ImageView guestPic;
     public ImageView guestStatus;
+    public ImageView guestCar;
     public View itemView;
 
     public GuestHolder(View itemView) {
@@ -65,6 +70,7 @@ public class GuestAdapter extends RecyclerView.Adapter<GuestAdapter.GuestHolder>
         guestName = (TextView) itemView.findViewById(R.id.guestName);
         guestPic = (ImageView) itemView.findViewById(R.id.guestProfilePic);
         guestStatus= (ImageView)itemView.findViewById(R.id.guestStatusIcon);
+        guestCar=(ImageView) itemView.findViewById(R.id.guestCar);
     }
 }
 }

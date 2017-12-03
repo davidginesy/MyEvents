@@ -15,6 +15,7 @@ public class User implements Parcelable{
     public String UID;
     public String token;
     public String hasAcceptedInvitation;
+    public String hasCar="false";
 
     public User() {
 
@@ -39,6 +40,7 @@ public class User implements Parcelable{
         this.UID=in.readString();
         this.token=in.readString();
         this.hasAcceptedInvitation=in.readString();
+        this.hasCar=in.readString();
     }
     public String toString() {
         String res = "name : "+username+"/n"+"email : "+email+"/n"+"provider : "+provider+"/n"+"photoURL : "+photoURL;
@@ -62,6 +64,7 @@ public class User implements Parcelable{
         parcel.writeString(UID);
         parcel.writeString(token);
         parcel.writeString(hasAcceptedInvitation);
+        parcel.writeString(hasCar);
     }
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
 

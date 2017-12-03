@@ -64,8 +64,9 @@ public class MainActivity extends AppCompatActivity {
             String photoUrl = auth.getCurrentUser().getPhotoUrl().toString();
             Picasso.with(getBaseContext()).load(photoUrl).fit().into(profilePicture);
         }
+        setTitle("Manage Event");
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content,new WelcomeFragment()).commit();
+        fragmentManager.beginTransaction().replace(R.id.content,new EventFragment()).commit();
     }
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
