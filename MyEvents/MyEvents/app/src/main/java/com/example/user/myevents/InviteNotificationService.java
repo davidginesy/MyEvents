@@ -29,12 +29,12 @@ public class InviteNotificationService extends FirebaseMessagingService {
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated.
 
-        if (getIntent().getExtras() != null) {
+        /*if (getIntent().getExtras() != null) {
             for (String key : getIntent().getExtras().keySet()) {
                 String value = getIntent().getExtras().getString(key);
                 Log.d(TAG, "Key: " + key + " Value: " + value);
             }
-        }
+        }*/
 
         FirebaseAuth auth;
         DatabaseReference rootRef;
