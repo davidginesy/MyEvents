@@ -17,6 +17,7 @@ public class Event implements Parcelable{
     public String owner;
     public boolean isPublic;
     public String description;
+    public String participation;
     public double longitude;
     public double latitude;
     private ArrayList<User> guestList=new ArrayList<>();
@@ -24,7 +25,7 @@ public class Event implements Parcelable{
         //Default constructor
     }
     public Event(String eventKey,String name,String theme,String address,String date,String time,String owner,boolean isPublic,
-                 String description, double longitude, double latitude){
+                 String description, String participation, double longitude, double latitude){
         this.eventKey=eventKey;
         this.name=name;
         this.theme=theme;
@@ -34,6 +35,7 @@ public class Event implements Parcelable{
         this.owner=owner;
         this.isPublic=isPublic;
         this.description=description;
+        this.participation=participation;
         this.latitude=latitude;
         this.longitude=longitude;
     }
@@ -46,6 +48,7 @@ public class Event implements Parcelable{
         this.time=in.readString();
         this.owner=in.readString();
         this.description=in.readString();
+        this.participation=in.readString();
         this.eventKey=in.readString();
         in.readTypedList(this.guestList,User.CREATOR);
     }
@@ -78,6 +81,7 @@ public class Event implements Parcelable{
         parcel.writeString(time);
         parcel.writeString(owner);
         parcel.writeString(description);
+        parcel.writeString(participation);
         parcel.writeString(eventKey);
         parcel.writeTypedList(guestList);
     }

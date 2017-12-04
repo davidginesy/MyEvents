@@ -45,6 +45,8 @@ public class EventDetailsActivity extends AppCompatActivity {
             detailLocation.setText(event.address);
             TextView detailOwner=findViewById(R.id.detailOwner);
             detailOwner.setText("Event created by "+event.owner);
+            TextView detailParticipation=findViewById(R.id.detailParticipation);
+            detailParticipation.setText(event.participation);
             TextView detailTheme=findViewById(R.id.detailTheme);
             detailTheme.setText("This event theme is "+event.theme);
             Button acceptButton=findViewById(R.id.eventAcceptBtn);
@@ -82,6 +84,8 @@ public class EventDetailsActivity extends AppCompatActivity {
             detailLocation.setText(event.address);
             TextView detailOwner=findViewById(R.id.detailOwner);
             detailOwner.setText("Event created by "+event.owner);
+            TextView detailParticipation=findViewById(R.id.detailParticipation);
+            detailParticipation.setText(event.participation);
             TextView detailTheme=findViewById(R.id.detailTheme);
             detailTheme.setText("This event theme is "+event.theme);
 
