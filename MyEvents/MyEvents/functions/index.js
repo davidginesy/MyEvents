@@ -18,16 +18,14 @@ exports.sendNotification = functions.database.ref('/userInvited/{userId}/{eventI
         console.log('this is a test');
         console.log('User invited id is', userId);
 		console.log('Event info', eventInfo);
+		
         // Create a notification
         const payload = {
             notification: {
                 title: "Invite notification",
-                body: "YOU HAVE BEEN INVITED",
+                body: eventInfo.owner+" has invited you to the event: "+eventInfo.name,
                 sound: "default"
-            },
-			/*data:{
-				"eventId" : eventId
-			}*/
+            }
         };
 
         //Create an options object that contains the time to live for the notification and the priority

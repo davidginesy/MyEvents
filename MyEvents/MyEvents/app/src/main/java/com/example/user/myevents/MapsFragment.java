@@ -65,7 +65,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     FirebaseAuth auth=FirebaseAuth.getInstance();
     String userID=auth.getCurrentUser().getUid();
     private FusedLocationProviderClient mFusedLocationClient;
-    DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
+    DateFormat sourceFormat = new SimpleDateFormat("yy/MM/dd HH:mm");
 
 
 
@@ -200,7 +200,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             }
         });
         //mMap.addMarker(new MarkerOptions().position(/*some location*/));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(48.3342613,-71.3825114), 10));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(48.4180785,-71.0716649), 11));
 
     }
 
