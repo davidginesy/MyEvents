@@ -68,10 +68,7 @@ public class EventCreatedFragment extends Fragment {
         //Requete pour recuperer les events d'un utilisateur
         auth =FirebaseAuth.getInstance();
         rootRef= FirebaseDatabase.getInstance().getReference();
-
-
         final String userId=auth.getCurrentUser().getUid();
-
         String currentDate=new SimpleDateFormat("yy/MM/dd").format(Calendar.getInstance().getTime());
         Query myEventsQuery=rootRef.child("eventList").child(userId).orderByChild("date").startAt(currentDate);
         final FirebaseRecyclerOptions<Event> myEvents =
@@ -81,7 +78,7 @@ public class EventCreatedFragment extends Fragment {
 
         eventAdapter=new FirebaseRecyclerAdapter<Event,EventHolder>(myEvents) {
             @Override
-            public void onBindViewHolder(EventHolder holder, final int position, final Event event) {
+            public void onBindViewHolder(EventHolder holder,  final int position,  final Event event) {
                 holder.txtName.setText(event.name);
                 //holder.txtTheme.setText(event.theme);
                 holder.txtAddress.setText("At "+event.address);
@@ -164,6 +161,8 @@ public class EventCreatedFragment extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 guestList.add(dataSnapshot.getValue(User.class));
+
+
             }
 
             @Override

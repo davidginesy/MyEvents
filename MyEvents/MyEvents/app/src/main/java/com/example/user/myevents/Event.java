@@ -23,7 +23,7 @@ public class Event implements Parcelable{
     public double latitude;
     public float rating;
     public int nbVote;
-    private ArrayList<User> guestList=new ArrayList<>();
+    public ArrayList<User> guestList=new ArrayList<>();
     public Event(){
         //Default constructor
     }
@@ -58,8 +58,9 @@ public class Event implements Parcelable{
         this.participation=in.readString();
         this.eventKey=in.readString();
         this.rating=in.readFloat();
-        this.nbVote=in.readInt();
         in.readTypedList(this.guestList,User.CREATOR);
+        this.nbVote=in.readInt();
+
     }
     public void setGuestList(ArrayList<User> guestList){
         this.guestList=guestList;

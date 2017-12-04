@@ -33,7 +33,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder>{
                                                          int viewType) {
         // create a layout
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.friend_list_item, null);
+                R.layout.friend_list_item, parent,false);
 
         UserHolder userHolder=new UserHolder(view);
         return userHolder;

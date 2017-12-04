@@ -109,6 +109,7 @@ public class EventInvitedFragment extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 guestList.add(dataSnapshot.getValue(User.class));
+
             }
 
             @Override

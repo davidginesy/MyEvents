@@ -10,9 +10,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-/**
- * Created by Alexandre on 28/11/2017.
- */
+
 
 public class InviteInstanceIDService extends FirebaseInstanceIdService {
 
@@ -22,19 +20,24 @@ public class InviteInstanceIDService extends FirebaseInstanceIdService {
     @Override
     public void onTokenRefresh() {
         // Get updated InstanceID token.
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Log.d(TAG, "Refreshed token: " + refreshedToken);
+        try{
+            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            Log.d(TAG, "Refreshed token: " + refreshedToken);
             FirebaseDatabase.getInstance().getReference()
                     .child("users")
                     .child(firebaseUser.getUid())
                     .child("token")
                     .setValue(refreshedToken);
-        sendRegistrationToServer(refreshedToken);
+            sendRegistrationToServer(refreshedToken);
 
-        String myNotification="notification_"+firebaseUser.getUid();
-        FirebaseMessaging.getInstance()
-                .subscribeToTopic(myNotification);
+            String myNotification="notification_"+firebaseUser.getUid();
+            FirebaseMessaging.getInstance()
+                    .subscribeToTopic(myNotification);
+        }catch (NullPointerException e){
+
+        }
+
     }
 
     /**

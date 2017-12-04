@@ -14,12 +14,10 @@ public class User implements Parcelable{
     public String photoURL;
     public String UID;
     public String token;
-    public String hasAcceptedInvitation;
-    public String hasCar="false";
+    public String hasAcceptedInvitation="pending";
+    public String hasCar="pending";
 
     public User() {
-
-        // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
     public User(String username, String email, String provider, String photoURL,String UID,String token) {
@@ -29,7 +27,6 @@ public class User implements Parcelable{
         this.photoURL = photoURL;
         this.UID=UID;
         this.token=token;
-        this.hasAcceptedInvitation="pending";
     }
 
     public User(Parcel in){
@@ -43,7 +40,7 @@ public class User implements Parcelable{
         this.hasCar=in.readString();
     }
     public String toString() {
-        String res = "name : "+username+"/n"+"email : "+email+"/n"+"provider : "+provider+"/n"+"photoURL : "+photoURL;
+        String res = "name : "+username+"email : "+email+"provider : "+provider+"photoURL : "+photoURL+"\nhasAcceptedInvitation"+hasAcceptedInvitation+"\nhasCar"+hasCar;
         return res;
     }
 

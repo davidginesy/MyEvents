@@ -37,7 +37,6 @@ public class AuthActivity extends AppCompatActivity {
 
 
         if (auth.getCurrentUser() != null) {
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             startActivity(new Intent(this, MainActivity.class));
             finish();
         } else {
@@ -67,10 +66,7 @@ public class AuthActivity extends AppCompatActivity {
                 startActivity(new Intent(this, MainActivity.class));
                 String photoURL=null;
                 final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                /*if (!auth.getCurrentUser().getProviders().get(0).equals("password")){
-                    photoURL=auth.getCurrentUser().getPhotoUrl().toString();
-                }*/
-                //photoURL=auth.getCurrentUser().getPhotoUrl().toString();
+
                 final List<String> registeredUsers=new ArrayList<>();
                 mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

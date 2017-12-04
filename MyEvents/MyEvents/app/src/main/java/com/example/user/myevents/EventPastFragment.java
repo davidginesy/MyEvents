@@ -81,7 +81,7 @@ public class EventPastFragment extends Fragment {
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            final Dialog ratingDialog = new Dialog(getContext(), R.style.AppTheme_NoActionBar);
+                            final Dialog ratingDialog = new Dialog(getContext(), android.R.style.Theme_Material_Dialog_NoActionBar_MinWidth);
                             ratingDialog.setContentView(R.layout.rating_dialog);
                             ratingDialog.setCancelable(true);
                             final RatingBar ratingBar=(RatingBar) ratingDialog.findViewById(R.id.dialog_ratingbar);
@@ -89,18 +89,16 @@ public class EventPastFragment extends Fragment {
                             rateButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Log.d("RATING",Float.toString(ratingBar.getRating()));
                                     Float myRating=ratingBar.getRating();
                                     Float currentRating=event.rating;
                                     int nbVote=event.nbVote+1;
-                                    Float newRating=currentRating+(myRating/nbVote);
-                                    rootRef.child("eventList").child(event.eventKey).child("rating").setValue(newRating);
-                                    rootRef.child("eventList").child(event.eventKey).child("nbVote").setValue(nbVote);
+                                    Float newRating=currentRating+((myRating-currentRating)/nbVote);
+                                    rootRef.child("eventList").child(event.ownerKey).child(event.eventKey).child("rating").setValue(newRating);
+                                    rootRef.child("eventList").child(event.ownerKey).child(event.eventKey).child("nbVote").setValue(nbVote);
                                     rootRef.child("userInvited").child(auth.getCurrentUser().getUid()).child(event.eventKey).child("rating").setValue(myRating);
                                     ratingDialog.dismiss();
                                 }
                             });
-                            //now that the dialog is set up, it's time to show it
                             ratingDialog.show();
                         }
                     });
@@ -146,37 +144,6 @@ public class EventPastFragment extends Fragment {
             eventView2.setAdapter(eventAdapter2);
             eventAdapter2.startListening();
         }
-      /*  private ArrayList<User> getGuestListFromDB(String eventID){
-            final ArrayList<User> guestList=new ArrayList<>();
-            rootRef.child("eventGuestList").child(eventID).addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    guestList.add(dataSnapshot.getValue(User.class));
-                }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-            return guestList;
-        }*/
-
         @Override
         public void onStop(){
             super.onStop();

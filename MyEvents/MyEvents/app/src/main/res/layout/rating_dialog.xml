@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="2dip">
+    android:padding="2dp">
 
     <TextView android:text="Rate event"
         android:id="@+id/rating_text"
@@ -28,7 +28,7 @@
     <Button android:id="@+id/rate_dialog_button"
         android:layout_height="wrap_content"
         android:text="Rate"
-        android:layout_margin="5dip"
+        android:layout_margin="5dp"
         android:textSize="18sp"
         android:layout_gravity="center"
         android:layout_width="wrap_content" />
