@@ -37,6 +37,7 @@ public class AuthActivity extends AppCompatActivity {
 
 
         if (auth.getCurrentUser() != null) {
+           // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             startActivity(new Intent(this, MainActivity.class));
             finish();
         } else {

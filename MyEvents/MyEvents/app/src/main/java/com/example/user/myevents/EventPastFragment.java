@@ -22,7 +22,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.Transaction;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -90,12 +92,26 @@ public class EventPastFragment extends Fragment {
                                 @Override
                                 public void onClick(View v) {
                                     Float myRating=ratingBar.getRating();
-                                    Float currentRating=event.rating;
-                                    int nbVote=event.nbVote+1;
-                                    Float newRating=currentRating+((myRating-currentRating)/nbVote);
-                                    rootRef.child("eventList").child(event.ownerKey).child(event.eventKey).child("rating").setValue(newRating);
-                                    rootRef.child("eventList").child(event.ownerKey).child(event.eventKey).child("nbVote").setValue(nbVote);
                                     rootRef.child("userInvited").child(auth.getCurrentUser().getUid()).child(event.eventKey).child("rating").setValue(myRating);
+                                    rootRef.child("eventList").child(event.ownerKey).child(event.eventKey).runTransaction(new Transaction.Handler() {
+                                        @Override
+                                        public Transaction.Result doTransaction(MutableData mutableData) {
+                                            Event e=mutableData.getValue(Event.class);
+                                            int nbVote=e.nbVote+1;
+                                            float currentRate=e.rating;
+                                            float myRating=ratingBar.getRating();
+                                            float newRate=currentRate+(myRating-currentRate)/nbVote;
+                                            e.nbVote++;
+                                            e.rating=newRate;
+                                            mutableData.setValue(e);
+                                            return Transaction.success(mutableData);
+                                        }
+
+                                        @Override
+                                        public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+
+                                        }
+                                    });
                                     ratingDialog.dismiss();
                                 }
                             });
