@@ -1,5 +1,6 @@
 package com.example.user.myevents;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -29,7 +31,9 @@ import java.util.Calendar;
 
 public class EventPastFragment extends Fragment {
         RecyclerView eventView;
+        RecyclerView eventView2;
         FirebaseRecyclerAdapter eventAdapter;
+        FirebaseRecyclerAdapter eventAdapter2;
         FirebaseAuth auth;
         DatabaseReference rootRef;
         @Override
@@ -44,6 +48,9 @@ public class EventPastFragment extends Fragment {
             eventView=(RecyclerView) view.findViewById(R.id.eventPastViewList);
             eventView.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
             eventView.setHasFixedSize(false);
+            eventView2=(RecyclerView) view.findViewById(R.id.eventPastViewList2);
+            eventView2.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
+            eventView2.setHasFixedSize(false);
             return view;
         }
         public void onStart(){
@@ -58,7 +65,7 @@ public class EventPastFragment extends Fragment {
             cal.add(Calendar.DATE, -7);
             String lastWeek=new SimpleDateFormat("yy/MM/dd").format(cal.getTime());
             Log.d("DATE",lastWeek);
-            String currentDate=new SimpleDateFormat("yy/MM/dd").format(Calendar.getInstance().getTime());
+            final String currentDate=new SimpleDateFormat("yy/MM/dd").format(Calendar.getInstance().getTime());
             Query myEventsQuery=rootRef.child("userInvited").child(userId).orderByChild("date").startAt(lastWeek).endAt(currentDate);
             final FirebaseRecyclerOptions<Event> myEvents =
                     new FirebaseRecyclerOptions.Builder<Event>()
@@ -70,16 +77,33 @@ public class EventPastFragment extends Fragment {
                 public void onBindViewHolder(EventPastHolder holder, final int position, final Event event) {
                     holder.txtName.setText(event.name);
                     holder.txtTime.setText("Was on "+event.date+" at "+event.time);
+                    holder.ratingBar.setRating(event.rating);
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
+                            final Dialog ratingDialog = new Dialog(getContext(), R.style.AppTheme_NoActionBar);
+                            ratingDialog.setContentView(R.layout.rating_dialog);
+                            ratingDialog.setCancelable(true);
+                            final RatingBar ratingBar=(RatingBar) ratingDialog.findViewById(R.id.dialog_ratingbar);
+                            Button rateButton = (Button) ratingDialog.findViewById(R.id.rate_dialog_button);
+                            rateButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Log.d("RATING",Float.toString(ratingBar.getRating()));
+                                    Float myRating=ratingBar.getRating();
+                                    Float currentRating=event.rating;
+                                    int nbVote=event.nbVote+1;
+                                    Float newRating=currentRating+(myRating/nbVote);
+                                    rootRef.child("eventList").child(event.eventKey).child("rating").setValue(newRating);
+                                    rootRef.child("eventList").child(event.eventKey).child("nbVote").setValue(nbVote);
+                                    rootRef.child("userInvited").child(auth.getCurrentUser().getUid()).child(event.eventKey).child("rating").setValue(myRating);
+                                    ratingDialog.dismiss();
+                                }
+                            });
+                            //now that the dialog is set up, it's time to show it
+                            ratingDialog.show();
                         }
                     });
-
-
-
-
                 }
                 @Override
                 public EventPastHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
@@ -94,6 +118,33 @@ public class EventPastFragment extends Fragment {
             };
             eventView.setAdapter(eventAdapter);
             eventAdapter.startListening();
+
+            Query myEventsQuery2=rootRef.child("eventList").child(userId).orderByChild("date").startAt(lastWeek).endAt(currentDate);
+            final FirebaseRecyclerOptions<Event> myEvents2 =
+                    new FirebaseRecyclerOptions.Builder<Event>()
+                            .setQuery(myEventsQuery2, Event.class)
+                            .build();
+
+            eventAdapter2=new FirebaseRecyclerAdapter<Event, EventPastHolder>(myEvents2) {
+                @Override
+                public void onBindViewHolder(EventPastHolder holder, final int position, final Event event) {
+                    holder.txtName.setText(event.name);
+                    holder.txtTime.setText("Was on "+event.date+" at "+event.time);
+                    holder.ratingBar.setRating(event.rating);
+                }
+                @Override
+                public EventPastHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+                    View view = LayoutInflater.from(parent.getContext())
+                            .inflate(R.layout.event_past_item, parent, false);
+                    return new EventPastHolder(view);
+                }
+                @Override
+                public void onError(DatabaseError e) {
+                    Log.d("ERROR BDD ","error bdd");
+                }
+            };
+            eventView2.setAdapter(eventAdapter2);
+            eventAdapter2.startListening();
         }
       /*  private ArrayList<User> getGuestListFromDB(String eventID){
             final ArrayList<User> guestList=new ArrayList<>();
@@ -130,6 +181,7 @@ public class EventPastFragment extends Fragment {
         public void onStop(){
             super.onStop();
             eventAdapter.stopListening();
+            eventAdapter2.stopListening();
         }
         private class EventPastHolder extends RecyclerView.ViewHolder {
             public TextView txtName;

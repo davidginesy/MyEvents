@@ -15,15 +15,18 @@ public class Event implements Parcelable{
     public String date;
     public String time;
     public String owner;
+    public String ownerKey;
     public boolean isPublic;
     public String description;
     public double longitude;
     public double latitude;
+    public float rating;
+    public int nbVote;
     private ArrayList<User> guestList=new ArrayList<>();
     public Event(){
         //Default constructor
     }
-    public Event(String eventKey,String name,String theme,String address,String date,String time,String owner,boolean isPublic,
+    public Event(String eventKey,String name,String theme,String address,String date,String time,String owner,String ownerKey,boolean isPublic,
                  String description, double longitude, double latitude){
         this.eventKey=eventKey;
         this.name=name;
@@ -32,10 +35,13 @@ public class Event implements Parcelable{
         this.date=date;
         this.time=time;
         this.owner=owner;
+        this.ownerKey=ownerKey;
         this.isPublic=isPublic;
         this.description=description;
         this.latitude=latitude;
         this.longitude=longitude;
+        this.rating=0;
+        this.nbVote=0;
     }
 
     public Event(Parcel in){
@@ -45,8 +51,11 @@ public class Event implements Parcelable{
         this.date=in.readString();
         this.time=in.readString();
         this.owner=in.readString();
+        this.ownerKey=in.readString();
         this.description=in.readString();
         this.eventKey=in.readString();
+        this.rating=in.readFloat();
+        this.nbVote=in.readInt();
         in.readTypedList(this.guestList,User.CREATOR);
     }
     public void setGuestList(ArrayList<User> guestList){
@@ -77,9 +86,12 @@ public class Event implements Parcelable{
         parcel.writeString(date);
         parcel.writeString(time);
         parcel.writeString(owner);
+        parcel.writeString(ownerKey);
         parcel.writeString(description);
         parcel.writeString(eventKey);
+        parcel.writeFloat(rating);
         parcel.writeTypedList(guestList);
+        parcel.writeInt(nbVote);
     }
     public static final Parcelable.Creator<Event> CREATOR = new Parcelable.Creator<Event>() {
 

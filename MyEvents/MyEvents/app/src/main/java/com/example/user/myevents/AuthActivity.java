@@ -34,9 +34,10 @@ public class AuthActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
 
         if (auth.getCurrentUser() != null) {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             startActivity(new Intent(this, MainActivity.class));
             finish();
         } else {
